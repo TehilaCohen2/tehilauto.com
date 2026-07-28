@@ -515,10 +515,10 @@ footer{display:block;padding:4rem 10vw 2rem}
 <a href="#main" class="skip-link">דלג לתוכן ראשי</a>
 
 <div id="cookieBanner">
-  <p>אנחנו משתמשים בקוקיז לשיפור החוויה שלך. המשך השימוש באתר מהווה הסכמה למדיניות זו. <a onclick="openPrivacyModal()">קרא עוד</a></p>
+  <p><svg style="width:18px;height:18px;vertical-align:middle;margin-left:6px;flex-shrink:0;display:inline-block;" viewBox="0 0 24 24" fill="var(--gold)" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1.5 4.5a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm4 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm-6 4a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm3 1.5a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm4.5-.5a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/></svg> הקוקיז שלנו לא יושבים בטלים — הם עובדים ברקע כדי שהאתר הזה יתאים לך כמו כפפה. <a href="#" role="button" tabindex="0" onclick="openPrivacyModal();return false;" onkeydown="if(event.key===&apos;Enter&apos;||event.key===&apos; &apos;){openPrivacyModal();return false;}">קרא עוד</a></p>
   <div class="cookie-btns">
-    <button class="cookie-btn" onclick="rejectCookies()">דחה</button>
-    <button class="cookie-btn primary" onclick="acceptCookies()">קבל הכל</button>
+    <button class="cookie-btn" onclick="rejectCookies()" aria-label="דחיית קוקיז">דחה</button>
+    <button class="cookie-btn primary" onclick="acceptCookies()" aria-label="אישור קוקיז">קבל הכל</button>
   </div>
 </div>
 
@@ -543,7 +543,7 @@ footer{display:block;padding:4rem 10vw 2rem}
   </div>
   <p>מערכות אוטומציה, בוטים חכמים וCRM מתקדם שיחסכו לך זמן, יגדילו מכירות וישדרגו את העסק — בלי לגעת בזה.</p>
   <div class="hero-btns">
-    <a href="tel:0533153356" class="btn-primary"><span><i class="uil uil-phone"></i> בואו נתחיל</span></a>
+    <a href="tel:0533153356" class="btn-primary"><span><i class="uil uil-phone" aria-hidden="true"></i> בואו נתחיל</span></a>
     <a href="#services" class="btn-ghost">השירותים שלי ↓</a>
   </div>
   <div class="scroll-hint">
@@ -583,9 +583,9 @@ footer{display:block;padding:4rem 10vw 2rem}
       <p>לכל עסק יש צרכים ותהליכים ייחודיים, ולכן אני מאמינה שגם פתרון האוטומציה חייב להיות מותאם אישית.</p>
       <div class="about-subtitle">מה התוצאות?</div>
       <div class="check-list" style="margin-bottom:1.75rem">
-        <div class="check-item"><i class="uil uil-check"></i>מקסימום יעילות: פחות זמן על עבודה ידנית.</div>
-        <div class="check-item"><i class="uil uil-check"></i>יותר שקט נפשי: הידיעה שהעסק מתקתק מאחורי הקלעים.</div>
-        <div class="check-item"><i class="uil uil-check"></i>הסרת חסמים: התפנות למה שבאמת מקדם את העסק.</div>
+        <div class="check-item"><i class="uil uil-check" aria-hidden="true"></i>מקסימום יעילות: פחות זמן על עבודה ידנית.</div>
+        <div class="check-item"><i class="uil uil-check" aria-hidden="true"></i>יותר שקט נפשי: הידיעה שהעסק מתקתק מאחורי הקלעים.</div>
+        <div class="check-item"><i class="uil uil-check" aria-hidden="true"></i>הסרת חסמים: התפנות למה שבאמת מקדם את העסק.</div>
       </div>
       <a href="#contact" class="btn-primary" style="display:inline-flex;width:fit-content"><span>נדבר על העסק שלך ←</span></a>
     </div>
@@ -606,17 +606,17 @@ footer{display:block;padding:4rem 10vw 2rem}
   <h2 class="section-title reveal">פתרונות מותאמים אישית<br>לכל סוג עסק</h2>
   <div class="services-grid">
     <div class="svc reveal">
-      <i class="uil uil-robot svc-icon"></i>
+      <i class="uil uil-robot svc-icon" aria-hidden="true"></i>
       <h3>בוטים חכמים</h3>
       <p>פיתוח בוטים מתקדמים שיענו ללקוחות, יקבעו פגישות ויטפלו בפניות בכל זמן.</p>
     </div>
     <div class="svc reveal reveal-delay-1">
-      <i class="uil uil-chart-bar svc-icon"></i>
+      <i class="uil uil-chart-bar svc-icon" aria-hidden="true"></i>
       <h3>מערכות CRM</h3>
       <p>ניהול קשרי לקוחות מתקדם עם כלים שינהלו את הנתונים בשבילך</p>
     </div>
     <div class="svc reveal reveal-delay-2">
-      <i class="uil uil-setting svc-icon"></i>
+      <i class="uil uil-setting svc-icon" aria-hidden="true"></i>
       <h3>אוטומציות עסקיות</h3>
       <p>זרימות עבודה חכמות שמחברות את הכלים שלך ומשחררות אותך מעבודה ידנית.</p>
     </div>
@@ -631,27 +631,27 @@ footer{display:block;padding:4rem 10vw 2rem}
     <div class="step reveal">
       <div class="step-num">1</div>
       <div class="step-card">
-        <div class="step-title"><i class="uil uil-comment-alt-dots"></i>שיחת היכרות ואבחון</div>
+        <div class="step-title"><i class="uil uil-comment-alt-dots" aria-hidden="true"></i>שיחת היכרות ואבחון</div>
         <p class="step-text">מכירה את העסק שלך לעומק — מבינה איפה הולכים לאיבוד זמן, כסף ושליטה, לפני שמדברים בכלל על פתרון.</p>
-        <div class="step-note"><i class="uil uil-comment-lines"></i>כדי לבנות נכון, קודם צריך להבין מה באמת קורה אצלך בעסק.</div>
+        <div class="step-note"><i class="uil uil-comment-lines" aria-hidden="true"></i>כדי לבנות נכון, קודם צריך להבין מה באמת קורה אצלך בעסק.</div>
       </div>
     </div>
 
     <div class="step reveal">
       <div class="step-num">2</div>
       <div class="step-card">
-        <div class="step-title"><i class="uil uil-map"></i>אפיון ומיפוי תהליכים</div>
+        <div class="step-title"><i class="uil uil-map" aria-hidden="true"></i>אפיון ומיפוי תהליכים</div>
         <p class="step-text">ממפה את כל התהליך צעד-אחר-צעד, ובוחרת את הכלים הנכונים לפי הצורך שלך — לא לפי טרנד.</p>
-        <div class="step-note"><i class="uil uil-comment-lines"></i>בשלב הזה העסק שלך מקבל תוכנית עבודה ברורה וממוקדת.</div>
+        <div class="step-note"><i class="uil uil-comment-lines" aria-hidden="true"></i>בשלב הזה העסק שלך מקבל תוכנית עבודה ברורה וממוקדת.</div>
       </div>
     </div>
 
     <div class="step reveal">
       <div class="step-num">3</div>
       <div class="step-card">
-        <div class="step-title"><i class="uil uil-setting"></i>בנייה ובדיקות</div>
+        <div class="step-title"><i class="uil uil-setting" aria-hidden="true"></i>בנייה ובדיקות</div>
         <p class="step-text">בונה את המערכת שלב אחר שלב, עם עדכון שוטף לאורך הדרך, ובודקת כל תרחיש לפני שהמערכת עולה לאוויר.</p>
-        <div class="step-note"><i class="uil uil-comment-lines"></i>רואה בדיוק מה מתקדם — בלי הפתעות באמצע.</div>
+        <div class="step-note"><i class="uil uil-comment-lines" aria-hidden="true"></i>רואה בדיוק מה מתקדם — בלי הפתעות באמצע.</div>
       </div>
     </div>
 
@@ -660,7 +660,7 @@ footer{display:block;padding:4rem 10vw 2rem}
       <div class="step-card">
         <div class="step-title"><svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 12.5l2.3 2.3a1.6 1.6 0 0 0 2.27 0 1.6 1.6 0 0 0 0-2.27L11 10.4"/><path d="M11 10.4l1.5 1.5a1.6 1.6 0 0 0 2.27 0 1.6 1.6 0 0 0 0-2.27L12.5 7.4c-.7-.7-1.83-.7-2.53 0l-.9.9c-.7.7-1.83.7-2.53 0L4.5 6.2"/><path d="M2 6.2h3.2L8.5 9.5"/><path d="M22 6.2h-3.2l-3.6 3.6"/><path d="M15.3 13.6l1.9 1.9c.7.7 1.83.7 2.53 0 .7-.7.7-1.83 0-2.53"/><path d="M2 5.2h2.6v8.4H2z"/><path d="M19.4 5.2H22v8.4h-2.6z"/></svg>הטמעה וליווי</div>
         <p class="step-text">מדריכה אותך ואת הצוות להשתמש במערכת, ונשארת זמינה למענה — עד שהכול רץ חלק בעסק בפועל.</p>
-        <div class="step-note"><i class="uil uil-comment-lines"></i>לא משאירה אותך עם מערכת — אלא עם שליטה אמיתית.</div>
+        <div class="step-note"><i class="uil uil-comment-lines" aria-hidden="true"></i>לא משאירה אותך עם מערכת — אלא עם שליטה אמיתית.</div>
       </div>
     </div>
   </div>
@@ -670,10 +670,10 @@ footer{display:block;padding:4rem 10vw 2rem}
   <div class="section-eyebrow reveal">למה לשדרג את העסק?</div>
   <h2 class="section-title reveal">למה לשדרג את העסק?</h2>
   <div class="why-grid">
-    <div class="why-item reveal"><div class="why-icon"><i class="uil uil-bolt"></i></div><div class="why-item-body"><div class="why-item-title">זמן וכספים שנחסכו</div><div class="why-item-text">אוטומציה = פחות שעות עבודה, יותר רווחים</div></div></div>
-    <div class="why-item reveal reveal-delay-1"><div class="why-icon"><i class="uil uil-crosshair"></i></div><div class="why-item-body"><div class="why-item-title">מערכות מותאמות אישית</div><div class="why-item-text">לא קניית תבנית מוכנה — פתרון שנבנה בדיוק להיות שלך</div></div></div>
-    <div class="why-item reveal reveal-delay-1"><div class="why-icon"><i class="uil uil-users-alt"></i></div><div class="why-item-body"><div class="why-item-title">ליווי אישי צמוד</div><div class="why-item-text">אני לא משאירה אותך לבד — ליווי מלא לאורך הדרך</div></div></div>
-    <div class="why-item reveal reveal-delay-2"><div class="why-icon"><i class="uil uil-rocket"></i></div><div class="why-item-body"><div class="why-item-title">קנה מידה ללא כאבים</div><div class="why-item-text">לגדול בלי להוסיף עובדים — המערכות כבר מתוכננות לכך</div></div></div>
+    <div class="why-item reveal"><div class="why-icon"><i class="uil uil-bolt" aria-hidden="true"></i></div><div class="why-item-body"><div class="why-item-title">זמן וכספים שנחסכו</div><div class="why-item-text">אוטומציה = פחות שעות עבודה, יותר רווחים</div></div></div>
+    <div class="why-item reveal reveal-delay-1"><div class="why-icon"><i class="uil uil-crosshair" aria-hidden="true"></i></div><div class="why-item-body"><div class="why-item-title">מערכות מותאמות אישית</div><div class="why-item-text">לא קניית תבנית מוכנה — פתרון שנבנה בדיוק להיות שלך</div></div></div>
+    <div class="why-item reveal reveal-delay-1"><div class="why-icon"><i class="uil uil-users-alt" aria-hidden="true"></i></div><div class="why-item-body"><div class="why-item-title">ליווי אישי צמוד</div><div class="why-item-text">אני לא משאירה אותך לבד — ליווי מלא לאורך הדרך</div></div></div>
+    <div class="why-item reveal reveal-delay-2"><div class="why-icon"><i class="uil uil-rocket" aria-hidden="true"></i></div><div class="why-item-body"><div class="why-item-title">קנה מידה ללא כאבים</div><div class="why-item-text">לגדול בלי להוסיף עובדים — המערכות כבר מתוכננות לכך</div></div></div>
   </div>
 </section>
 
@@ -703,19 +703,19 @@ footer{display:block;padding:4rem 10vw 2rem}
       <h3>שיחת היכרות חינמית</h3>
       <p>רוצה לדעת איך אוטומציה יכולה לשנות את העסק שלך? השאירו פרטים ונקבע שיחה.</p>
       <div class="contact-links">
-        <a href="tel:0533153356" class="clink"><div class="clink-icon"><i class="uil uil-phone"></i></div>053-315-3356</a>
-        <a href="mailto:tehila21376@gmail.com" class="clink"><div class="clink-icon"><i class="uil uil-envelope"></i></div>tehila21376@gmail.com</a>
+        <a href="tel:0533153356" class="clink"><div class="clink-icon"><i class="uil uil-phone" aria-hidden="true"></i></div>053-315-3356</a>
+        <a href="mailto:tehila21376@gmail.com" class="clink"><div class="clink-icon"><i class="uil uil-envelope" aria-hidden="true"></i></div>tehila21376@gmail.com</a>
       </div>
     </div>
     <div class="form-wrap reveal reveal-delay-1">
       <form onsubmit="submitForm(event)">
-        <div class="fld"><label>שם מלא *</label><input type="text" id="fromName" placeholder="ישראל ישראלי" required /></div>
-        <div class="fld"><label>טלפון *</label><input type="tel" id="fromPhone" placeholder="05X-XXX-XXXX" required dir="ltr" /></div>
-        <div class="fld"><label>אימייל *</label><input type="email" id="fromEmail" placeholder="you@example.com" required dir="ltr" /></div>
-        <div class="fld"><label>ספרו לי על העסק</label><textarea id="fromMessage" placeholder="סוג העסק, גודל, מה מאתגר אותך"></textarea></div>
+        <div class="fld"><label for="fromName">שם מלא *</label><input type="text" id="fromName" placeholder="ישראל ישראלי" required /></div>
+        <div class="fld"><label for="fromPhone">טלפון *</label><input type="tel" id="fromPhone" placeholder="05X-XXX-XXXX" required dir="ltr" /></div>
+        <div class="fld"><label for="fromEmail">אימייל *</label><input type="email" id="fromEmail" placeholder="you@example.com" required dir="ltr" /></div>
+        <div class="fld"><label for="fromMessage">ספרו לי על העסק</label><textarea id="fromMessage" placeholder="סוג העסק, גודל, מה מאתגר אותך"></textarea></div>
         <div class="consent-fld">
           <input type="checkbox" id="privacyCheckbox" required>
-          <label for="privacyCheckbox">אני מסכים/ה לתנאי <a onclick="openPrivacyModal()">מדיניות הפרטיות</a> ולשימוש בפרטים שלי ליצירת קשר</label>
+          <label for="privacyCheckbox">אני מסכים/ה לתנאי <a href="#" role="button" tabindex="0" onclick="openPrivacyModal();return false;" onkeydown="if(event.key===&apos;Enter&apos;||event.key===&apos; &apos;){openPrivacyModal();return false;}">מדיניות הפרטיות</a> ולשימוש בפרטים שלי ליצירת קשר</label>
         </div>
         <button type="submit" class="form-btn" id="submitBtn">שלחו פנייה ✦</button>
       </form>
@@ -730,49 +730,49 @@ footer{display:block;padding:4rem 10vw 2rem}
       <p>האוטומציה שמאחורי ההצלחה</p>
     </div>
     <div class="footer-col">
-      <h4><i class="uil uil-link-alt"></i> קישורים</h4>
+      <h4><i class="uil uil-link-alt" aria-hidden="true"></i> קישורים</h4>
       <a href="#about">קצת עליי</a>
       <a href="#services">השירותים</a>
       <a href="#contact">צור קשר</a>
     </div>
     <div class="footer-col">
-      <h4><i class="uil uil-shield-check"></i> משפטי</h4>
-      <a onclick="openPrivacyModal()">מדיניות פרטיות</a>
-      <a onclick="openAccessibilityModal()">הצהרת נגישות</a>
+      <h4><i class="uil uil-shield-check" aria-hidden="true"></i> משפטי</h4>
+      <a href="#" role="button" tabindex="0" onclick="openPrivacyModal();return false;" onkeydown="if(event.key===&apos;Enter&apos;||event.key===&apos; &apos;){openPrivacyModal();return false;}">מדיניות פרטיות</a>
+      <a href="#" role="button" tabindex="0" onclick="openAccessibilityModal();return false;" onkeydown="if(event.key===&apos;Enter&apos;||event.key===&apos; &apos;){openAccessibilityModal();return false;}">הצהרת נגישות</a>
     </div>
   </div>
   <div class="footer-bottom">
     <div>© 2026 תהילה כהן · כל הזכויות שמורות</div>
     <div class="footer-bottom-links">
-      <a href="tel:0533153356"><i class="uil uil-phone"></i> 053-315-3356</a>
-      <a href="mailto:tehila21376@gmail.com"><i class="uil uil-envelope"></i> tehila21376@gmail.com</a>
+      <a href="tel:0533153356"><i class="uil uil-phone" aria-hidden="true"></i> 053-315-3356</a>
+      <a href="mailto:tehila21376@gmail.com"><i class="uil uil-envelope" aria-hidden="true"></i> tehila21376@gmail.com</a>
     </div>
   </div>
 </footer>
 
-<div id="privacyModal" class="modal-overlay">
+<div id="privacyModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="privacyModalTitle">
   <div class="modal-box">
     <button class="modal-close" onclick="closePrivacyModal()" aria-label="סגור">✕</button>
-    <h2><i class="uil uil-shield-check"></i> מדיניות הפרטיות</h2>
-    <div class="modal-block"><i class="uil uil-check"></i><div><h3>1. מטרות העיבוד</h3><p>אנו עובדים את הפרטים שלך לשם יצירת קשר, תשובה לשאלות ויעוץ ישיר.</p></div></div>
-    <div class="modal-block"><i class="uil uil-check"></i><div><h3>2. אחריות ושם</h3><p><strong>אחראית:</strong> תהילה כהן | <strong>טלפון:</strong> 053-315-3356 | <strong>דוא״ל:</strong> tehila21376@gmail.com</p></div></div>
-    <div class="modal-block"><i class="uil uil-check"></i><div><h3>3. סוגי המידע</h3><p>שם, טלפון, דוא״ל, תיאור צרכי העסק שלך.</p></div></div>
-    <div class="modal-block"><i class="uil uil-check"></i><div><h3>4. משך השמירה</h3><p>הנתונים שמורים עד סיום הפרויקט, או עד 2 שנים ללא פעילות.</p></div></div>
-    <div class="modal-block"><i class="uil uil-check"></i><div><h3>5. הסכמה מרצון</h3><p>ההסכמה לתנאי מדיניות הפרטיות ולשימוש בפרטים שלך היא מרצון בלבד – ללא הסכמה לא נוכל לספק את השירות המבוקש.</p></div></div>
-    <div class="modal-block"><i class="uil uil-check"></i><div><h3>6. שיתוף מידע וצדדים שלישיים</h3><p>אנחנו משתמשים בכלים: EmailJS, Airtable, Make, Gmail ו-Cloudflare. המידע עשוי להישמר בשרתי חברות אלו.</p></div></div>
-    <div class="modal-block"><i class="uil uil-check"></i><div><h3>7. אבטחת המידע</h3><p>אנו משתמשים בהצפנת SSL/HTTPS, סיסמאות חזקות ואימות דו-שלבי (2FA) להגנה על פרטיך.</p></div></div>
-<div class="modal-block"><i class="uil uil-check"></i><div><h3>8. זכות עיון ותיקון</h3><p>יש לך זכות לעיין במידע השמור עליך במאגר, ולבקש את תיקונו או מחיקתו אם הוא שגוי, לא שלם או לא מעודכן. ניתן לפנות אלינו בדוא"ל או בטלפון ונשיב בתוך זמן סביר.</p></div></div>
-<div class="modal-block"><i class="uil uil-check"></i><div><h3>9. מסירת פרטים היא לפי בחירתך</h3><p>מסירת הפרטים בטופס זה היא מרצונך ובהתאם לבחירתך. אין חובה חוקית למסור אותם, אך ללא מסירתם לא נוכל ליצור עמך קשר ולספק את השירות המבוקש.</p></div></div>
-<div class="modal-block"><i class="uil uil-check"></i><div><h3>10. העברת מידע לחו"ל</h3><p>אין העברת מידע לחו"ל מעבר לשירותי הענן המפורטים בסעיף 6 לעיל (EmailJS, Airtable, Make, Gmail, Cloudflare), שחלקם עשויים לאחסן מידע בשרתים מחוץ לישראל כחלק מפעילותם הרגילה.</p></div></div>  </div>
+    <h2 id="privacyModalTitle"><i class="uil uil-shield-check" aria-hidden="true"></i> מדיניות הפרטיות</h2>
+    <div class="modal-block"><i class="uil uil-check" aria-hidden="true"></i><div><h3>1. מטרות העיבוד</h3><p>אנו עובדים את הפרטים שלך לשם יצירת קשר, תשובה לשאלות ויעוץ ישיר.</p></div></div>
+    <div class="modal-block"><i class="uil uil-check" aria-hidden="true"></i><div><h3>2. אחריות ושם</h3><p><strong>אחראית:</strong> תהילה כהן | <strong>טלפון:</strong> 053-315-3356 | <strong>דוא״ל:</strong> tehila21376@gmail.com</p></div></div>
+    <div class="modal-block"><i class="uil uil-check" aria-hidden="true"></i><div><h3>3. סוגי המידע</h3><p>שם, טלפון, דוא״ל, תיאור צרכי העסק שלך.</p></div></div>
+    <div class="modal-block"><i class="uil uil-check" aria-hidden="true"></i><div><h3>4. משך השמירה</h3><p>הנתונים שמורים עד סיום הפרויקט, או עד 2 שנים ללא פעילות.</p></div></div>
+    <div class="modal-block"><i class="uil uil-check" aria-hidden="true"></i><div><h3>5. הסכמה מרצון</h3><p>ההסכמה לתנאי מדיניות הפרטיות ולשימוש בפרטים שלך היא מרצון בלבד – ללא הסכמה לא נוכל לספק את השירות המבוקש.</p></div></div>
+    <div class="modal-block"><i class="uil uil-check" aria-hidden="true"></i><div><h3>6. שיתוף מידע וצדדים שלישיים</h3><p>אנחנו משתמשים בכלים: EmailJS, Airtable, Make, Gmail ו-Cloudflare. המידע עשוי להישמר בשרתי חברות אלו.</p></div></div>
+    <div class="modal-block"><i class="uil uil-check" aria-hidden="true"></i><div><h3>7. אבטחת המידע</h3><p>אנו משתמשים בהצפנת SSL/HTTPS, סיסמאות חזקות ואימות דו-שלבי (2FA) להגנה על פרטיך.</p></div></div>
+<div class="modal-block"><i class="uil uil-check" aria-hidden="true"></i><div><h3>8. זכות עיון ותיקון</h3><p>יש לך זכות לעיין במידע השמור עליך במאגר, ולבקש את תיקונו או מחיקתו אם הוא שגוי, לא שלם או לא מעודכן. ניתן לפנות אלינו בדוא"ל או בטלפון ונשיב בתוך זמן סביר.</p></div></div>
+<div class="modal-block"><i class="uil uil-check" aria-hidden="true"></i><div><h3>9. מסירת פרטים היא לפי בחירתך</h3><p>מסירת הפרטים בטופס זה היא מרצונך ובהתאם לבחירתך. אין חובה חוקית למסור אותם, אך ללא מסירתם לא נוכל ליצור עמך קשר ולספק את השירות המבוקש.</p></div></div>
+<div class="modal-block"><i class="uil uil-check" aria-hidden="true"></i><div><h3>10. העברת מידע לחו"ל</h3><p>אין העברת מידע לחו"ל מעבר לשירותי הענן המפורטים בסעיף 6 לעיל (EmailJS, Airtable, Make, Gmail, Cloudflare), שחלקם עשויים לאחסן מידע בשרתים מחוץ לישראל כחלק מפעילותם הרגילה.</p></div></div>  </div>
 </div>
-<div id="accessibilityModal" class="modal-overlay">
+<div id="accessibilityModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="accessibilityModalTitle">
   <div class="modal-box">
     <button class="modal-close" onclick="closeAccessibilityModal()" aria-label="סגור">✕</button>
-    <h2><i class="uil uil-shield-check"></i> הצהרת נגישות</h2>
-    <div class="modal-block"><i class="uil uil-check"></i><div><h3>מבוא</h3><p>תהילה כהן (Tehila Auto) רואה חשיבות רבה במתן שירות שוויוני, מכבד ונגיש לכלל האזרחים.</p></div></div>
-    <div class="modal-block"><i class="uil uil-check"></i><div><h3>רמת הנגישות</h3><p>אתר זה הונגש בהתאם לחוק שוויון זכויות לאנשים עם מוגבלות (2005) ובהתאם לתקן הישראלי (ת"י 5568) ברמת AA.</p></div></div>
-    <div class="modal-block"><i class="uil uil-check"></i><div><h3>תיקונים והתאמות</h3><ul><li>מבנה סמנטי עם כותרות היררכיות</li><li>ניווט מקלדת מלא (Tab, Enter, Esc)</li><li>ניגודיות וקריאות גבוהה</li><li>טקסט חלופי לתמונות</li><li>התאמה רספונסיבית מלאה</li></ul></div></div>
-    <div class="modal-block"><i class="uil uil-check"></i><div><h3>דיווח על בעיות</h3><p><i class="uil uil-phone"></i> 053-315-3356 | <i class="uil uil-envelope"></i> tehila21376@gmail.com<br>תאריך עדכון: יולי 2026</p></div></div>
+    <h2 id="accessibilityModalTitle"><i class="uil uil-shield-check" aria-hidden="true"></i> הצהרת נגישות</h2>
+    <div class="modal-block"><i class="uil uil-check" aria-hidden="true"></i><div><h3>מבוא</h3><p>תהילה כהן (Tehila Auto) רואה חשיבות רבה במתן שירות שוויוני, מכבד ונגיש לכלל האזרחים.</p></div></div>
+    <div class="modal-block"><i class="uil uil-check" aria-hidden="true"></i><div><h3>רמת הנגישות</h3><p>אתר זה הונגש בהתאם לחוק שוויון זכויות לאנשים עם מוגבלות (2005) ובהתאם לתקן הישראלי (ת"י 5568) ברמת AA.</p></div></div>
+    <div class="modal-block"><i class="uil uil-check" aria-hidden="true"></i><div><h3>תיקונים והתאמות</h3><ul><li>מבנה סמנטי עם כותרות היררכיות</li><li>ניווט מקלדת מלא (Tab, Enter, Esc)</li><li>ניגודיות וקריאות גבוהה</li><li>טקסט חלופי לתמונות</li><li>התאמה רספונסיבית מלאה</li></ul></div></div>
+    <div class="modal-block"><i class="uil uil-check" aria-hidden="true"></i><div><h3>דיווח על בעיות</h3><p><i class="uil uil-phone" aria-hidden="true"></i> 053-315-3356 | <i class="uil uil-envelope" aria-hidden="true"></i> tehila21376@gmail.com<br>תאריך עדכון: יולי 2026</p></div></div>
   </div>
 </div>
 
