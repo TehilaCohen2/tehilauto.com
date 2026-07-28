@@ -738,6 +738,7 @@ footer{display:block;padding:4rem 10vw 2rem}
     <div class="footer-col">
       <h4><i class="uil uil-shield-check" aria-hidden="true"></i> משפטי</h4>
       <a href="#" role="button" tabindex="0" onclick="openPrivacyModal();return false;" onkeydown="if(event.key===&apos;Enter&apos;||event.key===&apos; &apos;){openPrivacyModal();return false;}">מדיניות פרטיות</a>
+      <a href="#" role="button" tabindex="0" onclick="openTermsModal();return false;" onkeydown="if(event.key===&apos;Enter&apos;||event.key===&apos; &apos;){openTermsModal();return false;}">תנאי שימוש</a>
       <a href="#" role="button" tabindex="0" onclick="openAccessibilityModal();return false;" onkeydown="if(event.key===&apos;Enter&apos;||event.key===&apos; &apos;){openAccessibilityModal();return false;}">הצהרת נגישות</a>
     </div>
   </div>
@@ -773,6 +774,24 @@ footer{display:block;padding:4rem 10vw 2rem}
     <div class="modal-block"><i class="uil uil-check" aria-hidden="true"></i><div><h3>רמת הנגישות</h3><p>אתר זה הונגש בהתאם לחוק שוויון זכויות לאנשים עם מוגבלות (2005) ובהתאם לתקן הישראלי (ת"י 5568) ברמת AA.</p></div></div>
     <div class="modal-block"><i class="uil uil-check" aria-hidden="true"></i><div><h3>תיקונים והתאמות</h3><ul><li>מבנה סמנטי עם כותרות היררכיות</li><li>ניווט מקלדת מלא (Tab, Enter, Esc)</li><li>ניגודיות וקריאות גבוהה</li><li>טקסט חלופי לתמונות</li><li>התאמה רספונסיבית מלאה</li></ul></div></div>
     <div class="modal-block"><i class="uil uil-check" aria-hidden="true"></i><div><h3>דיווח על בעיות</h3><p><i class="uil uil-phone" aria-hidden="true"></i> 053-315-3356 | <i class="uil uil-envelope" aria-hidden="true"></i> tehila21376@gmail.com<br>תאריך עדכון: יולי 2026</p></div></div>
+  </div>
+</div>
+
+<div id="termsModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="termsModalTitle">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeTermsModal()" aria-label="סגור">✕</button>
+    <h2 id="termsModalTitle"><i class="uil uil-file-alt" aria-hidden="true"></i> תנאי שימוש</h2>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:1.2rem">עודכן לאחרונה: יולי 2026</p>
+    <div class="modal-block"><i class="uil uil-check" aria-hidden="true"></i><div><h3>1. כללי</h3><p>ברוכים הבאים לאתר tehilauto.com, המופעל על ידי תהילה כהן, עצמאית המספקת שירותי אוטומציה עסקית, בוטים ומערכות CRM לבעלי עסקים. הגלישה והשימוש באתר מהווים הסכמה מלאה לתנאי שימוש אלה.</p></div></div>
+    <div class="modal-block"><i class="uil uil-check" aria-hidden="true"></i><div><h3>2. מטרת האתר</h3><p>האתר משמש כאתר תדמית להצגת שירותים בלבד. כל התקשרות או עסקה עסקית מתבצעת מחוץ לאתר, בשיחה ותיאום ישיר בין הצדדים. התוכן המופיע באתר אינו מהווה הצעה מחייבת לרכישת שירות.</p></div></div>
+    <div class="modal-block"><i class="uil uil-check" aria-hidden="true"></i><div><h3>3. קהל היעד</h3><p>האתר מיועד לבעלי עסקים, חברות ולקוחות פרטיים המעוניינים בשירותי אוטומציה עסקית. השימוש באתר מיועד לבני 18 ומעלה בלבד.</p></div></div>
+    <div class="modal-block"><i class="uil uil-check" aria-hidden="true"></i><div><h3>4. קניין רוחני</h3><p>כל התכנים באתר — לרבות טקסטים, עיצובים, לוגו, תמונות, גרפיקות וקוד — הם רכושה הבלעדי של תהילה כהן ומוגנים על ידי חוקי זכויות יוצרים. אין להעתיק, לשכפל, להפיץ, להציג בפומבי או לעשות שימוש מסחרי בתכני האתר ללא אישור מפורש בכתב ומראש.</p></div></div>
+    <div class="modal-block"><i class="uil uil-check" aria-hidden="true"></i><div><h3>5. הגבלת אחריות</h3><p>האתר ניתן כפי שהוא (AS IS). נותנת השירות עושה כל מאמץ להבטיח את תקינות האתר, אך אינה אחראית לנזקים הנובעים מהשימוש בו, לרבות: שגיאות במידע, הפרעות זמינות, תקלות טכניות, ותכנים של צדדים שלישיים.</p></div></div>
+    <div class="modal-block"><i class="uil uil-check" aria-hidden="true"></i><div><h3>6. טופס יצירת קשר ופרטיות</h3><p>הפרטים הנמסרים דרך טופס יצירת הקשר ישמשו למתן מענה לפנייתך בלבד. נותנת השירות אינה מעבירה פרטים אלה לצדדים שלישיים, למעט ספקי שירות טכנולוגיים הכרחיים. לפרטים נוספים ראו מדיניות הפרטיות של האתר.</p></div></div>
+    <div class="modal-block"><i class="uil uil-check" aria-hidden="true"></i><div><h3>7. קישורים חיצוניים</h3><p>האתר עשוי להכיל קישורים לאתרים חיצוניים. נותנת השירות אינה אחראית לתכנים, לתנאי השימוש או למדיניות הפרטיות של אתרים אלה.</p></div></div>
+    <div class="modal-block"><i class="uil uil-check" aria-hidden="true"></i><div><h3>8. שינויים בתנאי השימוש</h3><p>נותנת השירות רשאית לעדכן תנאי שימוש אלה בכל עת. המשך השימוש באתר לאחר עדכון התנאים מהווה הסכמה לתנאים החדשים. תאריך העדכון האחרון מופיע בראש מסמך זה.</p></div></div>
+    <div class="modal-block"><i class="uil uil-check" aria-hidden="true"></i><div><h3>9. דין וסמכות שיפוט</h3><p>על תנאי שימוש אלה יחולו דיני מדינת ישראל. כל מחלוקת הנובעת מהשימוש באתר תידון בבתי המשפט המוסמכים במחוז חיפה</p></div></div>
+    <div class="modal-block"><i class="uil uil-check" aria-hidden="true"></i><div><h3>10. יצירת קשר</h3><p><i class="uil uil-phone" aria-hidden="true"></i> 053-315-3356 | <i class="uil uil-envelope" aria-hidden="true"></i> tehila21376@gmail.com</p></div></div>
   </div>
 </div>
 
@@ -813,6 +832,8 @@ if(!localStorage.getItem('cookieConsent')){document.getElementById('cookieBanner
 // MODALS
 function openPrivacyModal(){document.getElementById('privacyModal').classList.add('open');}
 function closePrivacyModal(){document.getElementById('privacyModal').classList.remove('open');}
+function openTermsModal(){document.getElementById('termsModal').classList.add('open');}
+function closeTermsModal(){document.getElementById('termsModal').classList.remove('open');}
 function openAccessibilityModal(){document.getElementById('accessibilityModal').classList.add('open');}
 function closeAccessibilityModal(){document.getElementById('accessibilityModal').classList.remove('open');}
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){closePrivacyModal();closeAccessibilityModal();}});
