@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
@@ -495,6 +496,131 @@ footer{display:block;padding:4rem 10vw 2rem}
 @media(max-width:640px){
   .steps{grid-template-columns:1fr;gap:1.25rem}
 }
+
+/* ===== ACCESSIBILITY WIDGET ===== */
+#a11y-btn{
+  position:fixed;right:0;top:50%;transform:translateY(-50%);
+  width:52px;height:52px;border-radius:50% 0 0 50%;
+  background:var(--dark);border:2px solid var(--gold);border-right:none;
+  cursor:pointer;z-index:9000;display:flex;align-items:center;justify-content:center;
+  box-shadow:-4px 0 16px rgba(0,0,0,0.22);transition:background 0.2s,box-shadow 0.2s;
+  padding:0;
+}
+#a11y-btn:hover,#a11y-btn:focus{background:var(--gold);outline:2px solid var(--gold);outline-offset:2px;box-shadow:-4px 0 24px rgba(201,150,58,0.4);}
+#a11y-btn svg{width:30px;height:30px;fill:#fff;flex-shrink:0}
+#a11y-panel{
+  position:fixed;right:0;top:50%;transform:translateY(-50%);
+  width:280px;background:var(--white);border-radius:20px 0 0 20px;
+  border:1.5px solid var(--border);border-right:none;
+  box-shadow:-8px 0 36px rgba(0,0,0,0.13);z-index:8999;
+  padding:1.3rem 1.1rem 1.1rem;display:none;direction:rtl;
+  max-height:82vh;overflow-y:auto;
+}
+#a11y-panel.open{display:block}
+#a11y-panel-header{font-size:0.95rem;font-weight:900;color:var(--dark);margin-bottom:0.9rem;display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--border);padding-bottom:0.65rem}
+#a11y-panel-header svg{width:17px;height:17px;fill:var(--gold);flex-shrink:0}
+.a11y-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:0.7rem}
+.a11y-item{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:5px;padding:9px 5px;border-radius:11px;border:1.5px solid var(--border);
+  background:var(--bg);cursor:pointer;font-size:10.5px;font-weight:700;color:var(--muted);
+  transition:all 0.17s;text-align:center;line-height:1.3;font-family:'Heebo',sans-serif;
+}
+.a11y-item svg{width:21px;height:21px;fill:currentColor;flex-shrink:0}
+.a11y-item:hover{border-color:var(--gold);color:var(--gold);background:#fffbf2}
+.a11y-item.on{border-color:var(--gold);color:#fff;background:var(--dark)}
+.a11y-item.on svg{fill:#fff}
+.a11y-reset-btn{
+  width:100%;padding:8px;border-radius:9px;border:1.5px solid var(--border);
+  background:var(--bg);font-size:11.5px;font-weight:700;color:var(--muted);
+  cursor:pointer;transition:all 0.17s;margin-top:2px;font-family:'Heebo',sans-serif;
+}
+.a11y-reset-btn:hover{border-color:var(--gold);color:var(--gold)}
+/* Feature classes applied to <body> */
+
+/* 1. הגדלת טקסט — filter:zoom על כל הטקסטים */
+body.a11y-big p,
+body.a11y-big h1,body.a11y-big h2,body.a11y-big h3,body.a11y-big h4,
+body.a11y-big li,body.a11y-big label,body.a11y-big a,
+body.a11y-big span,body.a11y-big div,body.a11y-big button,
+body.a11y-big input,body.a11y-big textarea{
+  font-size:1.2em!important;
+}
+body.a11y-big #a11y-panel *,body.a11y-big #a11y-btn *{font-size:initial!important}
+
+/* 2. ניגודיות — לא צהוב קיצוני, רק כהה על בהיר */
+/* ניגודיות גבוהה */
+body.a11y-high,
+body.a11y-high section,
+body.a11y-high .hero,
+body.a11y-high .services,
+body.a11y-high .about,
+body.a11y-high .steps-section,
+body.a11y-high .why,
+body.a11y-high .quiz,
+body.a11y-high .contact{
+  background:#fff!important;
+  color:#000!important;
+}
+body.a11y-high *{color:#000!important;}
+body.a11y-high [style*="background"],
+body.a11y-high .marquee,
+body.a11y-high nav,
+body.a11y-high footer,
+body.a11y-high .quiz-cta,
+body.a11y-high .contact-form,
+body.a11y-high .hero-bg{
+  background:#eee!important;
+}
+body.a11y-high nav *,
+body.a11y-high footer *,
+body.a11y-high .marquee *,
+body.a11y-high .quiz-cta *,
+body.a11y-high .contact-form *{color:#000!important;}
+body.a11y-high .btn-primary{background:#000!important;color:#fff!important;}
+body.a11y-high .btn-primary *,
+body.a11y-high .btn-primary span{color:#fff!important;}
+body.a11y-high .nav-cta{background:#000!important;color:#fff!important;}
+body.a11y-high a:not(.btn-primary):not(.nav-cta):not(.nav-logo){color:#00007a!important;text-decoration:underline!important;}
+body.a11y-high .service-card,
+body.a11y-high .why-item,
+body.a11y-high .quiz-item,
+body.a11y-high .about-card{background:#f5f5f5!important;border-color:#999!important;}
+body.a11y-high img{filter:contrast(1.2) brightness(1.05)!important;}
+/* ווידג'ט נגישות — לא נוגעים */
+body.a11y-high #a11y-btn{background:var(--dark)!important;}
+body.a11y-high #a11y-btn *{color:#fff!important;}
+body.a11y-high #a11y-panel{background:#fff!important;color:#000!important;}
+body.a11y-high #a11y-panel *{color:#000!important;}
+body.a11y-high .a11y-item.on{background:var(--dark)!important;}
+body.a11y-high .a11y-item.on,body.a11y-high .a11y-item.on *{color:#fff!important;}
+
+/* 3. ריווח טקסט */
+body.a11y-space p,body.a11y-space li,body.a11y-space span,
+body.a11y-space h1,body.a11y-space h2,body.a11y-space h3,body.a11y-space h4,
+body.a11y-space label,body.a11y-space a,body.a11y-space div{
+  line-height:2!important;
+  letter-spacing:0.08em!important;
+  word-spacing:0.15em!important;
+}
+
+/* 4. עצירת אנימציות — לא מסתיר, רק מקפיא */
+body.a11y-noanim *{
+  animation-play-state:paused!important;
+  transition-duration:0s!important;
+  transition-delay:0s!important;
+}
+body.a11y-noanim .reveal{
+  opacity:1!important;
+  transform:none!important;
+}
+body.a11y-noanim .hero-bg,body.a11y-noanim .hero-eyebrow,
+body.a11y-noanim .hero-title,body.a11y-noanim .hero-title-line2,
+body.a11y-noanim .hero-sub,body.a11y-noanim .hero-cta,body.a11y-noanim .scroll-hint{
+  opacity:1!important;
+  transform:none!important;
+  animation:none!important;
+}
 </style>
 <script type="application/ld+json">
 {
@@ -795,6 +921,58 @@ footer{display:block;padding:4rem 10vw 2rem}
   </div>
 </div>
 
+<!-- ACCESSIBILITY WIDGET -->
+<button id="a11y-btn" onclick="toggleA11yPanel()" aria-label="פתח תפריט נגישות" aria-expanded="false" aria-controls="a11y-panel">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="26" height="26" fill="#fff">
+    <circle cx="12" cy="4" r="2.2"/>
+    <path d="M17 8H7a1 1 0 0 0 0 2h3.5l-1.8 8h2.1l.7-3h1l.7 3h2.1l-1.8-8H17a1 1 0 0 0 0-2z"/>
+  </svg>
+</button>
+
+<div id="a11y-panel" role="dialog" aria-modal="false" aria-label="תפריט נגישות" aria-hidden="true">
+  <div id="a11y-panel-header">
+    <svg viewBox="0 0 24 24" aria-hidden="true" fill="var(--gold)">
+      <circle cx="12" cy="4" r="2.2"/>
+      <path d="M17 8H7a1 1 0 0 0 0 2h3.5l-1.8 8h2.1l.7-3h1l.7 3h2.1l-1.8-8H17a1 1 0 0 0 0-2z"/>
+    </svg>
+    תפריט נגישות
+  </div>
+  <div class="a11y-grid">
+
+    <button class="a11y-item" id="a11y-big-btn" onclick="toggleA11y('big')" aria-pressed="false">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><text x="2" y="18" font-size="14" font-weight="900" fill="currentColor">T</text><text x="10" y="20" font-size="12" font-weight="900" fill="currentColor">T</text></svg>
+      הגדלת טקסט
+    </button>
+
+    <button class="a11y-item" id="a11y-high-btn" onclick="toggleA11y('high')" aria-pressed="false">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="currentColor" opacity=".2"/><path d="M12 2a10 10 0 0 1 0 20z" fill="currentColor"/></svg>
+      ניגודיות גבוהה
+    </button>
+
+    <button class="a11y-item" id="a11y-links-btn" onclick="toggleA11y('links')" aria-pressed="false">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" stroke="currentColor" stroke-width="2" fill="none"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" stroke="currentColor" stroke-width="2" fill="none"/><line x1="4" y1="20" x2="20" y2="20" stroke="currentColor" stroke-width="2"/></svg>
+      הדגשת קישורים
+    </button>
+
+    <button class="a11y-item" id="a11y-space-btn" onclick="toggleA11y('space')" aria-pressed="false">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="4" y1="6" x2="20" y2="6" stroke="currentColor" stroke-width="2"/><line x1="4" y1="12" x2="20" y2="12" stroke="currentColor" stroke-width="2"/><line x1="4" y1="18" x2="20" y2="18" stroke="currentColor" stroke-width="2"/><polyline points="8 2 4 6 8 10" stroke="currentColor" stroke-width="1.5" fill="none"/><polyline points="8 22 4 18 8 14" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
+      ריווח טקסט
+    </button>
+
+    <button class="a11y-item" id="a11y-noanim-btn" onclick="toggleA11y('noanim')" aria-pressed="false">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="10" y="3" width="4" height="8" rx="2" fill="currentColor"/><rect x="10" y="13" width="4" height="8" rx="2" fill="currentColor" opacity=".4"/><line x1="3" y1="3" x2="21" y2="21" stroke="currentColor" stroke-width="2"/></svg>
+      עצירת אנימציות
+    </button>
+
+    <button class="a11y-item" id="a11y-focus-btn" onclick="toggleA11y('focus')" aria-pressed="false">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3" fill="currentColor"/><path d="M3 12h3M18 12h3M12 3v3M12 18v3" stroke="currentColor" stroke-width="2"/><path d="M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1" stroke="currentColor" stroke-width="1.5"/></svg>
+      הדגשת פוקוס
+    </button>
+
+  </div>
+  <button class="a11y-reset-btn" onclick="resetA11y()">↺ איפוס כל הגדרות הנגישות</button>
+</div>
+
 <script>
 // NAV
 window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('scrolled',scrollY>50));
@@ -830,6 +1008,89 @@ function rejectCookies(){localStorage.setItem('cookieConsent','rejected');docume
 if(!localStorage.getItem('cookieConsent')){document.getElementById('cookieBanner').style.display='flex';}
 
 // MODALS
+// ACCESSIBILITY WIDGET
+const A11Y_FEATURES=['big','high','links','space','noanim','focus'];
+const A11Y_CLASSES={big:'a11y-big',high:'a11y-high',links:'a11y-links',space:'a11y-space',noanim:'a11y-noanim',focus:'a11y-focus'};
+const A11Y_KEY='tehilauto_a11y';
+
+function toggleA11yPanel(){
+  var panel=document.getElementById('a11y-panel');
+  var btn=document.getElementById('a11y-btn');
+  var open=panel.classList.toggle('open');
+  btn.setAttribute('aria-expanded',open);
+  panel.setAttribute('aria-hidden',!open);
+}
+
+function toggleA11y(feat){
+  var cls=A11Y_CLASSES[feat];
+  var itemBtn=document.getElementById('a11y-'+feat+'-btn');
+  var isOn=document.body.classList.toggle(cls);
+  itemBtn.classList.toggle('on',isOn);
+  itemBtn.setAttribute('aria-pressed',isOn);
+  saveA11y();
+}
+
+function resetA11y(){
+  A11Y_FEATURES.forEach(function(f){
+    document.body.classList.remove(A11Y_CLASSES[f]);
+    var b=document.getElementById('a11y-'+f+'-btn');
+    if(b){b.classList.remove('on');b.setAttribute('aria-pressed','false');}
+  });
+  localStorage.removeItem(A11Y_KEY);
+}
+
+function saveA11y(){
+  var state={};
+  A11Y_FEATURES.forEach(function(f){state[f]=document.body.classList.contains(A11Y_CLASSES[f]);});
+  localStorage.setItem(A11Y_KEY,JSON.stringify(state));
+}
+
+function loadA11y(){
+  try{
+    var saved=JSON.parse(localStorage.getItem(A11Y_KEY)||'{}');
+    A11Y_FEATURES.forEach(function(f){
+      if(saved[f]){
+        document.body.classList.add(A11Y_CLASSES[f]);
+        var b=document.getElementById('a11y-'+f+'-btn');
+        if(b){b.classList.add('on');b.setAttribute('aria-pressed','true');}
+      }
+    });
+  }catch(e){}
+}
+
+// Focus style for focus feature
+(function(){
+  var style=document.createElement('style');
+  style.textContent='body.a11y-focus *:focus{outline:3px solid var(--gold)!important;outline-offset:3px!important;box-shadow:0 0 0 6px rgba(201,150,58,0.2)!important}';
+  document.head.appendChild(style);
+})();
+
+// Close panel when clicking outside
+document.addEventListener('click',function(e){
+  var panel=document.getElementById('a11y-panel');
+  var btn=document.getElementById('a11y-btn');
+  if(panel.classList.contains('open')&&!panel.contains(e.target)&&!btn.contains(e.target)){
+    panel.classList.remove('open');
+    btn.setAttribute('aria-expanded','false');
+    panel.setAttribute('aria-hidden','true');
+  }
+});
+
+// Close panel on Escape
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape'){
+    var panel=document.getElementById('a11y-panel');
+    if(panel.classList.contains('open')){
+      panel.classList.remove('open');
+      document.getElementById('a11y-btn').setAttribute('aria-expanded','false');
+      panel.setAttribute('aria-hidden','true');
+      document.getElementById('a11y-btn').focus();
+    }
+  }
+});
+
+loadA11y();
+
 function openPrivacyModal(){document.getElementById('privacyModal').classList.add('open');}
 function closePrivacyModal(){document.getElementById('privacyModal').classList.remove('open');}
 function openTermsModal(){document.getElementById('termsModal').classList.add('open');}
