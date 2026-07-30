@@ -497,6 +497,11 @@ footer{display:block;padding:4rem 10vw 2rem}
   .steps{grid-template-columns:1fr;gap:1.25rem}
 }
 
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important;}
+  .reveal{opacity:1!important;transform:none!important;}
+}
+
 /* ===== ACCESSIBILITY WIDGET ===== */
 #a11y-btn{
   position:fixed;right:0;top:50%;transform:translateY(-50%);
@@ -638,7 +643,7 @@ body.a11y-noanim .hero-sub,body.a11y-noanim .hero-cta,body.a11y-noanim .scroll-h
 </head>
 <body>
 
-<a href="#main" class="skip-link">דלג לתוכן ראשי</a>
+<a href="#main-content" class="skip-link">דלג לתוכן ראשי</a>
 
 <div id="cookieBanner">
   <p><svg style="width:18px;height:18px;vertical-align:middle;margin-left:6px;flex-shrink:0;display:inline-block;" viewBox="0 0 24 24" fill="var(--gold)" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1.5 4.5a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm4 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm-6 4a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm3 1.5a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm4.5-.5a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/></svg> הקוקיז שלנו לא יושבים בטלים — הם עובדים ברקע כדי שהאתר הזה יתאים לך כמו כפפה. <a href="#" role="button" tabindex="0" onclick="openPrivacyModal();return false;" onkeydown="if(event.key===&apos;Enter&apos;||event.key===&apos; &apos;){openPrivacyModal();return false;}">קרא עוד</a></p>
@@ -658,6 +663,9 @@ body.a11y-noanim .hero-sub,body.a11y-noanim .hero-cta,body.a11y-noanim .scroll-h
     <a href="#contact" class="nav-cta">בואו נדבר</a>
   </div>
 </nav>
+
+<!-- MAIN CONTENT -->
+<main id="main-content">
 
 <!-- HERO -->
 <section class="hero" id="main">
@@ -834,13 +842,14 @@ body.a11y-noanim .hero-sub,body.a11y-noanim .hero-cta,body.a11y-noanim .scroll-h
       </div>
     </div>
     <div class="form-wrap reveal reveal-delay-1">
-      <form onsubmit="submitForm(event)">
-        <div class="fld"><label for="fromName">שם מלא *</label><input type="text" id="fromName" placeholder="ישראל ישראלי" required /></div>
-        <div class="fld"><label for="fromPhone">טלפון *</label><input type="tel" id="fromPhone" placeholder="05X-XXX-XXXX" required dir="ltr" /></div>
-        <div class="fld"><label for="fromEmail">אימייל *</label><input type="email" id="fromEmail" placeholder="you@example.com" required dir="ltr" /></div>
+      <div id="form-error" role="alert" aria-live="polite" style="display:none;color:#c00;font-size:14px;margin-bottom:8px;"></div>
+      <form onsubmit="submitForm(event)" novalidate>
+        <div class="fld"><label for="fromName">שם מלא *</label><input type="text" id="fromName" placeholder="ישראל ישראלי" required aria-required="true" aria-describedby="fromName-err" /><span id="fromName-err" role="alert" style="display:none;color:#c00;font-size:12px;"></span></div>
+        <div class="fld"><label for="fromPhone">טלפון *</label><input type="tel" id="fromPhone" placeholder="05X-XXX-XXXX" required aria-required="true" dir="ltr" aria-describedby="fromPhone-err" /><span id="fromPhone-err" role="alert" style="display:none;color:#c00;font-size:12px;"></span></div>
+        <div class="fld"><label for="fromEmail">אימייל *</label><input type="email" id="fromEmail" placeholder="you@example.com" required aria-required="true" dir="ltr" aria-describedby="fromEmail-err" /><span id="fromEmail-err" role="alert" style="display:none;color:#c00;font-size:12px;"></span></div>
         <div class="fld"><label for="fromMessage">ספרו לי על העסק</label><textarea id="fromMessage" placeholder="סוג העסק, גודל, מה מאתגר אותך"></textarea></div>
         <div class="consent-fld">
-          <input type="checkbox" id="privacyCheckbox" required>
+          <input type="checkbox" id="privacyCheckbox" required aria-required="true">
           <label for="privacyCheckbox">אני מסכים/ה לתנאי <a href="#" role="button" tabindex="0" onclick="openPrivacyModal();return false;" onkeydown="if(event.key===&apos;Enter&apos;||event.key===&apos; &apos;){openPrivacyModal();return false;}">מדיניות הפרטיות</a> ולשימוש בפרטים שלי ליצירת קשר</label>
         </div>
         <button type="submit" class="form-btn" id="submitBtn">שלחו פנייה ✦</button>
@@ -876,6 +885,8 @@ body.a11y-noanim .hero-sub,body.a11y-noanim .hero-cta,body.a11y-noanim .scroll-h
     </div>
   </div>
 </footer>
+
+</main>
 
 <div id="privacyModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="privacyModalTitle">
   <div class="modal-box">
