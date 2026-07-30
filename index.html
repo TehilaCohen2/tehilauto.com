@@ -1113,6 +1113,66 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'){closePrivacyModal()
 // FORM — שולח שני מיילים: תשובה אוטומטית ללקוח + התראה אלייך
 function submitForm(e){
   e.preventDefault();
+
+  // ניקוי שגיאות קודמות
+  ['fromName','fromPhone','fromEmail'].forEach(function(id){
+    var el = document.getElementById(id);
+    var err = document.getElementById(id+'-err');
+    el.removeAttribute('aria-invalid');
+    err.style.display = 'none';
+    err.textContent = '';
+  });
+  var formErr = document.getElementById('form-error');
+  formErr.style.display = 'none';
+  formErr.textContent = '';
+
+  // validation
+  var valid = true;
+  var firstErr = null;
+
+  var name = document.getElementById('fromName');
+  if(!name.value.trim()){
+    name.setAttribute('aria-invalid','true');
+    var nameErr = document.getElementById('fromName-err');
+    nameErr.textContent = 'נא למלא שם מלא';
+    nameErr.style.display = 'block';
+    if(!firstErr) firstErr = name;
+    valid = false;
+  }
+
+  var phone = document.getElementById('fromPhone');
+  if(!phone.value.trim()){
+    phone.setAttribute('aria-invalid','true');
+    var phoneErr = document.getElementById('fromPhone-err');
+    phoneErr.textContent = 'נא למלא מספר טלפון';
+    phoneErr.style.display = 'block';
+    if(!firstErr) firstErr = phone;
+    valid = false;
+  }
+
+  var email = document.getElementById('fromEmail');
+  if(!email.value.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)){
+    email.setAttribute('aria-invalid','true');
+    var emailErr = document.getElementById('fromEmail-err');
+    emailErr.textContent = !email.value.trim() ? 'נא למלא כתובת אימייל' : 'כתובת אימייל לא תקינה';
+    emailErr.style.display = 'block';
+    if(!firstErr) firstErr = email;
+    valid = false;
+  }
+
+  var checkbox = document.getElementById('privacyCheckbox');
+  if(!checkbox.checked){
+    formErr.textContent = 'יש לאשר את מדיניות הפרטיות';
+    formErr.style.display = 'block';
+    if(!firstErr) firstErr = checkbox;
+    valid = false;
+  }
+
+  if(!valid){
+    if(firstErr) firstErr.focus();
+    return;
+  }
+
   const btn = document.getElementById('submitBtn');
   const originalText = btn.textContent;
   btn.textContent = 'שולח...';
