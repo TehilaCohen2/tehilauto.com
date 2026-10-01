@@ -591,7 +591,7 @@ footer{display:block;padding:4rem 10vw 2rem}
   content:'';position:absolute;top:27px;right:12.5%;left:12.5%;height:1.5px;
   background:linear-gradient(to left, var(--gold-border), var(--border) 90%);z-index:0;
 }
-.step{position:relative}
+.step{position:relative;display:flex;flex-direction:column}
 .steps .step:nth-child(1){transition-delay:0s}
 .steps .step:nth-child(2){transition-delay:.75s}
 .steps .step:nth-child(3){transition-delay:1.5s}
@@ -605,7 +605,7 @@ footer{display:block;padding:4rem 10vw 2rem}
 .step:hover .step-num{background:var(--gold);color:#fff;transform:scale(1.08)}
 .step-card{
   background:var(--white);border:1px solid var(--border);border-radius:20px;padding:1.5rem 1.5rem;
-  text-align:center;height:100%;transition:all 0.35s ease;
+  text-align:center;flex:1;transition:all 0.35s ease;
 }
 .step:hover .step-card{border-color:var(--gold-border);box-shadow:0 16px 40px rgba(0,0,0,0.06);transform:translateY(-4px)}
 .step-title{font-size:1.05rem;font-weight:800;margin-bottom:0.6rem;display:flex;align-items:center;justify-content:center;gap:8px}
