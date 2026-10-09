@@ -1,5 +1,6 @@
 
 
+
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
@@ -46,6 +47,22 @@
   (function(){
     emailjs.init({ publicKey: "5K7J_rqkgQSRfgdWz" });
   })();
+</script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){ dataLayer.push(arguments); }
+  function loadAnalytics(){
+    if (window.__gaLoaded) return;
+    window.__gaLoaded = true;
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=G-N2SPMW5BPY';
+    document.head.appendChild(s);
+    gtag('js', new Date());
+    gtag('config', 'G-N2SPMW5BPY');
+  }
+  function track(name, params){ if (window.__gaLoaded) gtag('event', name, params); }
+  try { if (localStorage.getItem('cookieConsent') === 'accepted') loadAnalytics(); } catch(e) {}
 </script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -1220,11 +1237,11 @@ body.a11y-noanim .hero-sub,body.a11y-noanim .hero-cta,body.a11y-noanim .scroll-h
     <div class="modal-block"><i class="uil uil-check" aria-hidden="true"></i><div><h3>3. סוגי המידע</h3><p>שם, טלפון, דוא״ל, תיאור צרכי העסק שלך.</p></div></div>
     <div class="modal-block"><i class="uil uil-check" aria-hidden="true"></i><div><h3>4. משך השמירה</h3><p>הנתונים שמורים עד סיום הפרויקט, או עד 2 שנים ללא פעילות.</p></div></div>
     <div class="modal-block"><i class="uil uil-check" aria-hidden="true"></i><div><h3>5. הסכמה מרצון</h3><p>ההסכמה לתנאי מדיניות הפרטיות ולשימוש בפרטים שלך היא מרצון בלבד – ללא הסכמה לא נוכל לספק את השירות המבוקש.</p></div></div>
-    <div class="modal-block"><i class="uil uil-check" aria-hidden="true"></i><div><h3>6. שיתוף מידע וצדדים שלישיים</h3><p>אנחנו משתמשים בכלים: EmailJS, Airtable, Make, Gmail ו-Cloudflare. המידע עשוי להישמר בשרתי חברות אלו.</p></div></div>
+    <div class="modal-block"><i class="uil uil-check" aria-hidden="true"></i><div><h3>6. שיתוף מידע וצדדים שלישיים</h3><p>אנחנו משתמשים בכלים: EmailJS, Airtable, Make, Gmail, Google Analytics ו-Cloudflare. המידע עשוי להישמר בשרתי חברות אלו.</p></div></div>
     <div class="modal-block"><i class="uil uil-check" aria-hidden="true"></i><div><h3>7. אבטחת המידע</h3><p>אנו משתמשים בהצפנת SSL/HTTPS, סיסמאות חזקות ואימות דו-שלבי (2FA) להגנה על פרטיך.</p></div></div>
 <div class="modal-block"><i class="uil uil-check" aria-hidden="true"></i><div><h3>8. זכות עיון ותיקון</h3><p>יש לך זכות לעיין במידע השמור עליך במאגר, ולבקש את תיקונו או מחיקתו אם הוא שגוי, לא שלם או לא מעודכן. ניתן לפנות אלינו בדוא"ל או בטלפון ונשיב בתוך זמן סביר.</p></div></div>
 <div class="modal-block"><i class="uil uil-check" aria-hidden="true"></i><div><h3>9. מסירת פרטים היא לפי בחירתך</h3><p>מסירת הפרטים בטופס זה היא מרצונך ובהתאם לבחירתך. אין חובה חוקית למסור אותם, אך ללא מסירתם לא נוכל ליצור עמך קשר ולספק את השירות המבוקש.</p></div></div>
-<div class="modal-block"><i class="uil uil-check" aria-hidden="true"></i><div><h3>10. העברת מידע לחו"ל</h3><p>אין העברת מידע לחו"ל מעבר לשירותי הענן המפורטים בסעיף 6 לעיל (EmailJS, Airtable, Make, Gmail, Cloudflare), שחלקם עשויים לאחסן מידע בשרתים מחוץ לישראל כחלק מפעילותם הרגילה.</p></div></div>  </div>
+<div class="modal-block"><i class="uil uil-check" aria-hidden="true"></i><div><h3>10. העברת מידע לחו"ל</h3><p>אין העברת מידע לחו"ל מעבר לשירותי הענן המפורטים בסעיף 6 לעיל (EmailJS, Airtable, Make, Gmail, Google Analytics, Cloudflare), שחלקם עשויים לאחסן מידע בשרתים מחוץ לישראל כחלק מפעילותם הרגילה.</p></div></div>  </div>
 </div>
 <div id="accessibilityModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="accessibilityModalTitle">
   <div class="modal-box">
@@ -1352,16 +1369,37 @@ function wireVideo(id){
   var video=document.getElementById('v-'+id);
   var overlay=document.getElementById('ov-'+id);
   if(!frame||!video||!overlay) return;
-  var activated=false;
-  function activate(){
+  var activated=false, startedBy='click', sentMem={};
+  var pageName=location.pathname||'/';
+  function once(key,name,params){
+    var k='gaVideo:'+id+':'+key;
+    try{ if(sessionStorage.getItem(k)) return; sessionStorage.setItem(k,'1'); }
+    catch(e){ if(sentMem[k]) return; sentMem[k]=1; }
+    track(name,params);
+  }
+  function activate(how){
     if(activated) return;
     activated=true;
+    startedBy=how;
     video.controls=true;
     video.play().catch(function(){});
     overlay.classList.add('is-hidden');
   }
-  frame.addEventListener('mouseenter',activate);
-  overlay.addEventListener('click',activate);
+  video.addEventListener('play',function(){
+    once('play','video_play',{video_name:id,page_name:pageName,play_type:startedBy});
+  });
+  video.addEventListener('timeupdate',function(){
+    var d=video.duration; if(!d) return;
+    var p=video.currentTime/d*100;
+    [25,50,75].forEach(function(t){
+      if(p>=t) once('p'+t,'video_progress',{video_name:id,page_name:pageName,percent:t});
+    });
+  });
+  video.addEventListener('ended',function(){
+    once('p100','video_progress',{video_name:id,page_name:pageName,percent:100});
+  });
+  frame.addEventListener('mouseenter',function(){activate('hover');});
+  overlay.addEventListener('click',function(){activate('click');});
 }
 ['tasks','forms','landing'].forEach(wireVideo);
 
@@ -1425,8 +1463,8 @@ setTimeout(type,1200);
 function toggleQuiz(el){el.classList.toggle('checked');el.setAttribute('aria-pressed',el.classList.contains('checked'));}
 
 // COOKIES
-function acceptCookies(){localStorage.setItem('cookieConsent','accepted');document.getElementById('cookieBanner').style.display='none';}
-function rejectCookies(){localStorage.setItem('cookieConsent','rejected');document.getElementById('cookieBanner').style.display='none';}
+function acceptCookies(){localStorage.setItem('cookieConsent','accepted');document.getElementById('cookieBanner').style.display='none';loadAnalytics();}
+function rejectCookies(){localStorage.setItem('cookieConsent','rejected');window['ga-disable-G-N2SPMW5BPY']=true;document.getElementById('cookieBanner').style.display='none';}
 if(!localStorage.getItem('cookieConsent')){document.getElementById('cookieBanner').style.display='flex';}
 
 // MODALS
@@ -1601,6 +1639,7 @@ function submitForm(e){
 
   Promise.all([sendAutoReply, sendToMe])
     .then(() => {
+      track('form_submit',{form_name:'contact'});
       btn.textContent = '✓ הפנייה נשלחה! אחזור אליכם בקרוב';
       btn.style.background = '#2E7D52';
       e.target.reset();
