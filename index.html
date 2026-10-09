@@ -1192,6 +1192,7 @@ body.a11y-noanim .hero-sub,body.a11y-noanim .hero-cta,body.a11y-noanim .scroll-h
           <input type="checkbox" id="privacyCheckbox" required aria-required="true">
           <label for="privacyCheckbox">אני מסכים/ה לתנאי <a href="#" role="button" tabindex="0" onclick="openPrivacyModal();return false;" onkeydown="if(event.key===&apos;Enter&apos;||event.key===&apos; &apos;){openPrivacyModal();return false;}">מדיניות הפרטיות</a> ולשימוש בפרטים שלי ליצירת קשר</label>
         </div>
+        <div aria-hidden="true" style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden"><label for="hpWebsite">אתר</label><input type="text" id="hpWebsite" name="website" tabindex="-1" autocomplete="off"></div>
         <button type="submit" class="form-btn" id="submitBtn">שלחו פנייה ✦</button>
       </form>
     </div>
@@ -1562,6 +1563,8 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'){closePrivacyModal()
 // FORM — שולח שני מיילים: תשובה אוטומטית ללקוח + התראה אלייך
 function submitForm(e){
   e.preventDefault();
+  var hp = document.getElementById('hpWebsite');
+  if (hp && hp.value) return;
 
   // ניקוי שגיאות קודמות
   ['fromName','fromPhone','fromEmail'].forEach(function(id){
