@@ -51,6 +51,14 @@
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){ dataLayer.push(arguments); }
+  var gaPageLocation = location.href;
+  try {
+    var u = new URL(location.href), had = false;
+    Array.from(u.searchParams.keys()).forEach(function(k){
+      if (k.indexOf('utm_') === 0) { u.searchParams.delete(k); had = true; }
+    });
+    if (had) history.replaceState(null, '', u.pathname + u.search + u.hash);
+  } catch(e) {}
   function loadAnalytics(){
     if (window.__gaLoaded) return;
     window.__gaLoaded = true;
@@ -59,7 +67,7 @@
     s.src = 'https://www.googletagmanager.com/gtag/js?id=G-N2SPMW5BPY';
     document.head.appendChild(s);
     gtag('js', new Date());
-    gtag('config', 'G-N2SPMW5BPY');
+    gtag('config', 'G-N2SPMW5BPY', { page_location: gaPageLocation });
   }
   function track(name, params){ if (window.__gaLoaded) gtag('event', name, params); }
   try { if (localStorage.getItem('cookieConsent') === 'accepted') loadAnalytics(); } catch(e) {}
