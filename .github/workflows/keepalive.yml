@@ -1,0 +1,22 @@
+name: keepalive
+
+on:
+  schedule:
+    - cron: "17 6 1 * *"
+  workflow_dispatch:
+
+permissions:
+  actions: write
+
+jobs:
+  keepalive:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Re-enable scheduled workflows
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: |
+          gh api -X PUT "repos/$REPO/actions/workflows/weekly.yml/enable"
+          gh api -X PUT "repos/$REPO/actions/workflows/keepalive.yml/enable"
