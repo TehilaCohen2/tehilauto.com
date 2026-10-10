@@ -116,7 +116,14 @@ def fetch_traffic(token, start, end):
         "metrics": [{"name": "sessions"}],
     })
     channels = {d[0]: int(m[0]) for d, m in rows}
-    return {"total_sessions": sum(channels.values()), "channels": channels}
+    src_rows = ga4_report(token, start, end, {
+        "dimensions": [{"name": "sessionSource"}, {"name": "sessionMedium"}],
+        "metrics": [{"name": "sessions"}],
+        "orderBys": [{"metric": {"metricName": "sessions"}, "desc": True}],
+        "limit": 15,
+    })
+    sources = {f"{d[0]} / {d[1]}": int(m[0]) for d, m in src_rows}
+    return {"total_sessions": sum(channels.values()), "channels": channels, "sources": sources}
 
 
 def fetch_engagement(token, start, end):
@@ -163,7 +170,16 @@ def fetch_leads(token, start, end):
         }},
     })
     by_channel = {d[1]: int(m[0]) for d, m in rows}
-    return {"total": sum(by_channel.values()), "by_channel": by_channel}
+    src_rows = ga4_report(token, start, end, {
+        "dimensions": [{"name": "eventName"}, {"name": "sessionSource"}, {"name": "sessionMedium"}],
+        "metrics": [{"name": "eventCount"}],
+        "dimensionFilter": {"filter": {
+            "fieldName": "eventName",
+            "stringFilter": {"matchType": "EXACT", "value": "form_submit"},
+        }},
+    })
+    by_source = {f"{d[1]} / {d[2]}": int(m[0]) for d, m in src_rows}
+    return {"total": sum(by_channel.values()), "by_channel": by_channel, "by_source": by_source}
 
 
 # ---- Supabase ----
@@ -259,6 +275,10 @@ def change(cur, prev):
     return f"{arrow} {abs(d):.0f}%"
 
 
+def src_label(key):
+    return "ישיר (מקור לא ידוע)" if key == "(direct) / (none)" else key
+
+
 def table(headers, rows):
     th = "".join(f"<th style='text-align:right;padding:4px 10px;border-bottom:1px solid #ccc'>{e(h)}</th>"
                  for h in headers)
@@ -324,6 +344,20 @@ def build_email(start, end, data, prev, errors):
         hdr = ["מקור", "כניסות"] + (["שינוי"] if tp is not None else [])
         parts.append(section("מאיפה הגיעו", table(hdr, rows) if rows else "<p>אין נתונים.</p>"))
 
+        # 3א. אתר מקור מדויק (מקור / אמצעי)
+        sources, sp = t.get("sources", {}), (tp or {}).get("sources")
+        srows = []
+        for key, n in sorted(sources.items(), key=lambda kv: -kv[1]):
+            row = [src_label(key), n]
+            if sp is not None:
+                row.append(change(n, sp.get(key, 0)))
+            srows.append(row)
+        shdr = ["מקור / אמצעי", "כניסות"] + (["שינוי"] if sp is not None else [])
+        snote = ("<p style='font-size:12px;color:#666'>״ישיר״ כולל גם כניסות מאפליקציות שאינן מעבירות "
+                 "מקור (למשל וואטסאפ). קישור עם utm_source מאפשר לזהות אותן.</p>")
+        parts.append(section("מאיפה הגיעו: לפי אתר מקור",
+                             (table(shdr, srows) + snote) if srows else "<p>אין נתונים.</p>"))
+
     # 4. זמן שהייה
     g, gp = data.get("ga4_engagement"), prev.get("ga4_engagement")
     if g is None:
@@ -353,7 +387,10 @@ def build_email(start, end, data, prev, errors):
         if ldp is not None:
             body += f" ({change(ld['total'], ldp['total'])})"
         body += "</p>"
-        if ld["by_channel"]:
+        if ld.get("by_source"):
+            body += table(["מקור / אמצעי", "פניות"], [[src_label(k), v]
+                                                    for k, v in sorted(ld["by_source"].items(), key=lambda kv: -kv[1])])
+        elif ld["by_channel"]:
             body += table(["מקור", "פניות"], [[CHANNEL_HE.get(k, k), v]
                                                for k, v in sorted(ld["by_channel"].items(), key=lambda kv: -kv[1])])
         parts.append(section("פניות", body))
