@@ -37,7 +37,6 @@ def env(monkeypatch):
     sent = []
     monkeypatch.setattr(mailer, "send_mail",
                         lambda subj, body, to=None: sent.append((subj, body)) or f"<id{len(sent)}@x>")
-    monkeypatch.setattr(tasks, "BRIEF_DIR", os.path.join(os.environ.get("TMPDIR", "/tmp"), "bb"))
     return s, sent
 
 
@@ -63,26 +62,20 @@ def test_task2_marks_used_and_never_deletes(env):
     assert len(sent) == 1
 
 
-def test_task1_then_task2_skip_video_topic(env):
+def test_task1_prompt_and_rotation(env):
     s, sent = env
-    tasks.task1_prepare(s)
-    video_post = next(p for p in s.posts() if p["תאריך סרטון"])
-    tasks.task2_post(s)
-    used = next(p for p in s.posts() if s.is_used(p))
-    assert used["ID"] != video_post["ID"]
-    # הסגנון עדיין לא סומן עד אחרי הסרטון
-    assert all(not x["בשימוש_אחרון (תאריך)"] for x in s.styles())
-    tasks.video_done(s)
-    assert sum(bool(x["בשימוש_אחרון (תאריך)"]) for x in s.styles()) == 1
-
-
-def test_style_rotation_oldest_first(env):
-    s, _ = env
     for i, d in enumerate(["2026-01-05", "", "2026-01-01", "2026-02-01", "2026-03-01", "2026-04-01"]):
         s.t[st.STYLES].set(i + 2, "בשימוש_אחרון (תאריך)", d)
-    tasks.task1_prepare(s)
-    assert "סגנון: שרטוט טכני" in open(
-        os.path.join(tasks.BRIEF_DIR, f"video_brief_{config.today()}.md"), encoding="utf-8").read()
+    tasks.task1_prompt(s)
+    subj, body = sent[0]
+    assert subj.startswith("פרומפט סרטון ליום ראשון - ")
+    assert body.startswith("צור סרטון לפי סקיל social-video-nadav")
+    assert "מילות סגנון: שרטוט טכני" in body and "לשאול על נדב לפני התחלה" in body
+    assert [x["בשימוש_אחרון (תאריך)"] for x in s.styles()][1] == config.today()
+    video_post = next(p for p in s.posts() if p["תאריך סרטון"])
+    assert not s.is_used(video_post)
+    tasks.task2_post(s)  # לא חוזר על נושא הסרטון
+    assert next(p for p in s.posts() if s.is_used(p))["ID"] != video_post["ID"]
 
 
 def test_task3_and_approval(env, monkeypatch):

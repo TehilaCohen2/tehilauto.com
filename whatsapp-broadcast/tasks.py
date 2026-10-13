@@ -1,15 +1,10 @@
 import datetime as dt
-import json
-import os
-import sys
 
 import config
 import content
 import mailer
 from store import Store
 from topics_bank import SEED
-
-BRIEF_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "output")
 
 
 def _guard(store, name, force):
@@ -29,59 +24,40 @@ def _video_recent(p, days=7):
     return (config.now().date() - dt.date.fromisoformat(d)).days < days
 
 
-# ---------- משימה 1: סרטון ----------
-def task1_prepare(store: Store, force=False):
+# ---------- משימה 1: פרומפט לסרטון ----------
+PROMPT = """צור סרטון לפי סקיל social-video-nadav עם הפרמטרים הבאים:
+
+סוג: מושן גרפיקס
+מסר: {topic}
+מילות סגנון: {style}
+קול: ללא
+ערוץ: וואטסאפ
+
+כללים נוספים (מהסקיל):
+- בלי נשים בשום צורה
+- פריים 0 מלא ולא ריק
+- מיתוג tehilauto במסך סיום
+- אנכי 1080x1920, 30fps, 20–30 שניות
+- עברית RTL, פונט Heebo
+- לשאול על נדב לפני התחלה"""
+
+
+def task1_prompt(store: Store, force=False):
     if not _guard(store, "task1", force):
         return
     post = next((p for p in store.posts()
                  if not store.is_used(p) and not p.get("תאריך סרטון")), None)
     styles = store.styles()
     if not post or not styles:
-        mailer.send_mail("סרטון שבועי: אין נושא פנוי", "אין שורה פנויה בטאב פוסטים או סגנונות בגיליון.")
+        mailer.send_mail("פרומפט סרטון ליום ראשון - אין נושא פנוי",
+                         "אין שורה פנויה בטאב פוסטים או סגנונות בגיליון.")
         return
     style = min(styles, key=lambda s: (s["בשימוש_אחרון (תאריך)"] or "0000-00-00", int(s["ID"])))
-    scenes, direction = content.video_script(post, style["שם_סגנון"])
-
-    lines = [f"נושא: {post['נושא']}", f"סגנון: {style['שם_סגנון']} - {direction}",
-             "סוג: מושן גרפיקס | קול: ללא | 1080x1920, 30fps, כ-28 שניות", "",
-             "תסריט לאישור:"]
-    lines += [f"{i}. [{t}] {k}: {txt}" for i, (t, k, txt) in enumerate(scenes, 1)]
-    lines += ["", "כללים: בלי נשים, פריים 0 מלא, מיתוג tehilauto.",
-              "לאישור: להריץ ב-Claude Code את הסקיל social-video-nadav עם הקובץ המצורף בתיקיית output,",
-              "ובסיום: python broadcast.py video-done"]
-    text = "\n".join(lines)
-
-    os.makedirs(BRIEF_DIR, exist_ok=True)
-    path = os.path.join(BRIEF_DIR, f"video_brief_{config.today()}.md")
-    with open(path, "w", encoding="utf-8") as f:
-        f.write(text + "\n")
-
-    mailer.send_mail(f"תסריט סרטון לאישור - {post['נושא']}", text)
-    store.mark_post_video(post, config.today())
-    store.set_state("video_pending", json.dumps(
-        {"post_row": post["_row"], "style_row": style["_row"], "date": config.today()}))
-    print("brief:", path)
-
-
-def video_done(store: Store):
-    """אחרי שהסרטון אושר ורונדר: מסמן את הסגנון כבשימוש אחרון."""
-    raw = store.get_state("video_pending")
-    if not raw:
-        print("אין סרטון ממתין")
-        return
-    pend = json.loads(raw)
-    store.mark_style_used({"_row": pend["style_row"]}, config.today())
-    store.set_state("video_pending", "")
-    print("הסגנון עודכן")
-
-
-def video_cancel(store: Store):
-    """תסריט נדחה: משחרר את הנושא ואת הסגנון לסבב הבא."""
-    raw = store.get_state("video_pending")
-    if raw:
-        pend = json.loads(raw)
-        store.t["פוסטים"].set(pend["post_row"], "תאריך סרטון", "")
-        store.set_state("video_pending", "")
+    body = PROMPT.format(topic=post["נושא"], style=style["שם_סגנון"])
+    mailer.send_mail(f"פרומפט סרטון ליום ראשון - {post['נושא']}", body)
+    # רק אחרי שהמייל נשלח
+    store.mark_style_used(style, config.today())
+    store.mark_post_video(post, config.today())  # שפוסט רביעי לא יחזור על אותו נושא
 
 
 # ---------- משימה 2: פוסט ----------
