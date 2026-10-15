@@ -32,5 +32,5 @@ li .time { font-variant-numeric: tabular-nums; direction: ltr; color: #374151; f
 li .del { background: none; color: #9ca3af; font-size: 15px; padding: 0 4px; }
 li .del:hover { color: #dc2626; }
 .empty { color: #9ca3af; font-size: 13px; padding: 6px 0; }
-footer { margin-top: 10px; }
+footer { margin-top: 10px; display: flex; justify-content: space-between; }
 [hidden] { display: none !important; }

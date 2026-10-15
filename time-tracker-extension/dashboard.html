@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <title>הפרויקטים שלי – מד זמן</title>
+  <link rel="stylesheet" href="popup.css">
+  <style>
+    body { width: auto; max-width: 560px; margin: 32px auto; padding: 0 16px; }
+    .sum { background: #eef2ff; border-radius: 10px; padding: 12px 14px; margin-bottom: 8px; display: flex; justify-content: space-between; font-weight: 600; }
+    ul { max-height: none; }
+    li { padding: 11px 0; font-size: 15px; }
+    li .sub { color: #9ca3af; font-size: 12px; }
+  </style>
+</head>
+<body>
+  <h1>⏱ הפרויקטים שלי</h1>
+  <div class="sum"><span>סה״כ זמן עבודה</span><span id="grand" style="direction:ltr">00:00:00</span></div>
+  <div id="running" class="empty" hidden></div>
+  <ul id="totals"></ul>
+  <div id="empty" class="empty">עדיין אין פרויקטים.</div>
+  <footer><span></span><button id="export" class="link">ייצוא ל-CSV</button></footer>
+  <script src="common.js"></script>
+  <script src="dashboard.js"></script>
+</body>
+</html>
