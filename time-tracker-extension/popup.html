@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <title>מד זמן לפרויקטים</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <h1>⏱ מד זמן לפרויקטים</h1>
+
+  <section id="idle">
+    <input id="project" type="text" list="projects" placeholder="שם הפרויקט" autocomplete="off">
+    <datalist id="projects"></datalist>
+    <button id="start" class="primary">▶ הפעלת טיימר</button>
+  </section>
+
+  <section id="active" hidden>
+    <div class="label">עובדת על:</div>
+    <div id="current" class="current"></div>
+    <div id="clock" class="clock">00:00:00</div>
+    <button id="stop" class="danger">■ סיום טיימר</button>
+  </section>
+
+  <h2>סיכום לפי פרויקט</h2>
+  <ul id="totals"></ul>
+  <div id="empty" class="empty">עדיין אין נתונים. התחילי טיימר ראשון!</div>
+
+  <footer>
+    <button id="export" class="link">ייצוא ל-CSV</button>
+  </footer>
+
+  <script src="popup.js"></script>
+</body>
+</html>
