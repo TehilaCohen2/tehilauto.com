@@ -48,7 +48,7 @@ function projectRow(name, ms, onChange) {
     await resetProject(name); onChange();
   };
   d.onclick = async () => {
-    if (!confirm(`למחוק את הפרויקט "${name}" וכל הזמן שנשמר לו?`)) return;
+    if (!confirm(`האם הנך בטוח למחוק את שעות הפרויקט "${name}"? הפרויקט וכל הזמן שנשמר לו יימחקו.`)) return;
     await deleteProject(name); onChange();
   };
   li.append(n, t, r, d);
