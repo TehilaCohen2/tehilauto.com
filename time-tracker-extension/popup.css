@@ -70,3 +70,19 @@ details.manual[open] summary { margin-bottom: 10px; }
 .row { display: flex; gap: 8px; }
 .row input { flex: 1; min-width: 0; }
 .msg { font-size: 12px; color: var(--green); margin-top: 6px; min-height: 1em; }
+.seg { display: flex; gap: 4px; background: #f1ecfb; border-radius: 10px; padding: 3px; margin-bottom: 8px; }
+.seg button { flex: 1; padding: 6px 0; background: none; color: var(--muted); font-size: 12px; font-weight: 700; border-radius: 8px; }
+.seg button.on { background: var(--card); color: var(--brand); box-shadow: 0 1px 4px rgba(109,40,217,.18); }
+li .del.play { color: var(--green); }
+li .del.play:hover { color: #fff; background: var(--green); }
+.hrow { background: var(--card); border-radius: 10px; padding: 9px 12px; margin-bottom: 6px; box-shadow: 0 1px 4px rgba(109,40,217,.08); }
+.hrow.view { display: flex; align-items: center; gap: 6px; }
+.hinfo { flex: 1; min-width: 0; }
+.hname { font-weight: 600; word-break: break-word; }
+.hmeta { font-size: 12px; color: var(--muted); }
+.hrow .time { font-variant-numeric: tabular-nums; direction: ltr; font-weight: 700; color: var(--brand); background: #f3edff; padding: 2px 8px; border-radius: 20px; font-size: 13px; }
+.hrow .del { background: none; color: #b8b5d0; font-size: 16px; padding: 2px 5px; border-radius: 6px; }
+.hrow .del:hover { color: var(--red); background: #fef2f2; }
+.hrow label { display: block; font-size: 12px; color: var(--muted); margin: 4px 0 2px; }
+.hrow button.primary { margin-top: 6px; }
+.msg.err { color: var(--red); }

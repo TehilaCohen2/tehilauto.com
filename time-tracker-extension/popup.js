@@ -20,6 +20,7 @@ async function render() {
   fillLists(state);
   bindSubList($("project"), $("subs-start"), () => state);
   $("empty").hidden = state.names.length > 0;
+  bindPeriod($("period"), () => state, render);
   renderProjects($("totals"), state, render);
 }
 
@@ -27,10 +28,7 @@ $("start").onclick = async () => {
   const project = $("project").value.trim();
   const sub = $("sub").value.trim();
   if (!project) { $("project").focus(); return; }
-  await addProject(project, sub);
-  const running = { project, start: Date.now() };
-  if (sub) running.sub = sub;
-  await chrome.storage.local.set({ running });
+  await startTimer(project, sub);
   $("project").value = ""; $("sub").value = "";
   render();
 };
@@ -39,7 +37,7 @@ for (const id of ["project", "sub"]) $(id).addEventListener("keydown", (e) => { 
 $("stop").onclick = async () => {
   const { running, sessions } = await load();
   if (!running) return;
-  const entry = { project: running.project, start: running.start, end: Date.now() };
+  const entry = { id: newId(), project: running.project, start: running.start, end: Date.now() };
   if (running.sub) entry.sub = running.sub;
   sessions.push(entry);
   await chrome.storage.local.set({ sessions });

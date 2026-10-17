@@ -6,15 +6,36 @@ function fmt(ms) {
 
 // מבנה הנתונים:
 // sessions: [{ project, sub?, start, end }]   projects: [שמות]   subs: { פרויקט: [תתי-פרויקטים] }
+const newId = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+
+function periodFrom(period) {
+  const d = new Date();
+  d.setHours(0, 0, 0, 0);
+  if (period === "today") return d.getTime();
+  if (period === "week") { d.setDate(d.getDate() - d.getDay()); return d.getTime(); } // שבוע מתחיל ביום ראשון
+  if (period === "month") { d.setDate(1); return d.getTime(); }
+  return 0;
+}
+
+// חותך רשומות לפי תקופה (רשומה שחוצה את תחילת התקופה נספרת רק בחלק שבתוכה)
+function clipSessions(sessions, from) {
+  if (!from) return sessions;
+  return sessions.filter((s) => s.end > from).map((s) => ({ ...s, start: Math.max(s.start, from) }));
+}
+
 async function load() {
-  const { running = null, sessions = [], projects = [], subs = {} } =
-    await chrome.storage.local.get(["running", "sessions", "projects", "subs"]);
+  const { running = null, sessions = [], projects = [], subs = {}, period = "all" } =
+    await chrome.storage.local.get(["running", "sessions", "projects", "subs", "period"]);
+  if (sessions.some((s) => !s.id)) { // רשומות ישנות בלי מזהה
+    for (const s of sessions) if (!s.id) s.id = newId();
+    await chrome.storage.local.set({ sessions });
+  }
   const names = [...new Set([...projects, ...sessions.map((s) => s.project)])];
   const subMap = {};
   for (const n of names) {
     subMap[n] = [...new Set([...(subs[n] || []), ...sessions.filter((s) => s.project === n && s.sub).map((s) => s.sub)])];
   }
-  return { running, sessions, names, subMap };
+  return { running, sessions, names, subMap, period, view: clipSessions(sessions, periodFrom(period)) };
 }
 
 // sub === undefined: כל הזמן של הפרויקט (כולל תתי-פרויקטים). sub === "": רק זמן ללא תת-פרויקט
@@ -35,6 +56,28 @@ async function addProject(name, sub) {
   if (!subs[name]) subs[name] = [];
   if (sub && !subs[name].includes(sub)) subs[name].push(sub);
   await chrome.storage.local.set({ projects: [...new Set([...names, name])], subs });
+}
+
+async function startTimer(project, sub) {
+  await addProject(project, sub);
+  const running = { project, start: Date.now() };
+  if (sub) running.sub = sub;
+  await chrome.storage.local.set({ running });
+}
+
+async function updateSession(id, patch) {
+  const { sessions } = await load();
+  const s = sessions.find((x) => x.id === id);
+  if (!s) return;
+  Object.assign(s, patch);
+  if (!s.sub) delete s.sub;
+  await chrome.storage.local.set({ sessions });
+  await addProject(s.project, s.sub);
+}
+
+async function deleteSession(id) {
+  const { sessions } = await load();
+  await chrome.storage.local.set({ sessions: sessions.filter((x) => x.id !== id) });
 }
 
 const matches = (s, project, sub) => s.project === project && (sub === undefined || (s.sub || "") === sub);
@@ -59,7 +102,7 @@ async function deleteProject(name, sub) {
 
 function el(tag, props) { return Object.assign(document.createElement(tag), props); }
 
-function projectRow(name, sub, ms, onChange) {
+function projectRow(name, sub, ms, onChange, canStart) {
   const isSub = sub !== undefined;
   const li = el("li", { className: isSub ? "sub" : "" });
   const label = isSub ? sub : name;
@@ -67,7 +110,7 @@ function projectRow(name, sub, ms, onChange) {
   const d = el("button", { className: "del", textContent: "✕", title: "מחיקה" });
   r.onclick = async () => {
     const what = isSub ? `תת-הפרויקט "${sub}"` : `הפרויקט "${name}"`;
-    if (!confirm(`לאפס את הזמן של ${what}? השם יישאר.`)) return;
+    if (!confirm(`לאפס את כל הזמן של ${what} (לא רק בתקופה המוצגת)? השם יישאר.`)) return;
     await resetProject(name, sub); onChange();
   };
   d.onclick = async () => {
@@ -78,17 +121,24 @@ function projectRow(name, sub, ms, onChange) {
     await deleteProject(name, sub); onChange();
   };
   li.append(el("span", { className: "name", textContent: (isSub ? "↳ " : "") + label }),
-            el("span", { className: "time", textContent: fmt(ms) }), r, d);
+            el("span", { className: "time", textContent: fmt(ms) }));
+  if (canStart) {
+    const p = el("button", { className: "del play", textContent: "▶", title: "הפעלת טיימר" });
+    p.onclick = async () => { await startTimer(name, sub); onChange(); };
+    li.append(p);
+  }
+  li.append(r, d);
   return li;
 }
 
 // מצייר את כל הפרויקטים ותתי-הפרויקטים
 function renderProjects(ul, state, onChange) {
-  const { sessions, names, subMap } = state;
+  const { view: sessions, names, subMap, running } = state;
+  const canStart = !running;
   const sorted = [...names].sort((a, b) => totalFor(sessions, b) - totalFor(sessions, a));
   const rows = [];
   for (const n of sorted) {
-    rows.push(projectRow(n, undefined, totalFor(sessions, n), onChange));
+    rows.push(projectRow(n, undefined, totalFor(sessions, n), onChange, canStart));
     const subs = [...subMap[n]].sort((a, b) => totalFor(sessions, n, b) - totalFor(sessions, n, a));
     const direct = totalFor(sessions, n, "");
     if (subs.length && direct > 0) {
@@ -96,9 +146,18 @@ function renderProjects(ul, state, onChange) {
       li.append(el("span", { className: "name", textContent: "↳ ללא תת-פרויקט" }), el("span", { className: "time", textContent: fmt(direct) }));
       rows.push(li);
     }
-    for (const s of subs) rows.push(projectRow(n, s, totalFor(sessions, n, s), onChange));
+    for (const s of subs) rows.push(projectRow(n, s, totalFor(sessions, n, s), onChange, canStart));
   }
   ul.replaceChildren(...rows);
+}
+
+// בורר תקופה: היום / השבוע / החודש / הכול
+function bindPeriod(container, getState, onChange) {
+  const mark = () => container.querySelectorAll("button").forEach((b) => b.classList.toggle("on", b.dataset.p === getState().period));
+  container.querySelectorAll("button").forEach((b) => {
+    b.onclick = async () => { await chrome.storage.local.set({ period: b.dataset.p }); onChange(); };
+  });
+  mark();
 }
 
 // ממלא את רשימות ההשלמה האוטומטית
@@ -131,7 +190,7 @@ function bindManual(getState, onDone) {
     const end = date === today() ? Date.now() : new Date(`${date}T12:00:00`).getTime();
     await addProject(project, sub);
     const { sessions } = await load();
-    const entry = { project, start: end - mins * 60000, end };
+    const entry = { id: newId(), project, start: end - mins * 60000, end };
     if (sub) entry.sub = sub;
     sessions.push(entry);
     await chrome.storage.local.set({ sessions });
