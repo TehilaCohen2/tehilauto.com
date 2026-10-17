@@ -19,6 +19,20 @@
   <h1>⏱ הפרויקטים שלי</h1>
   <div class="wrap">
   <div class="sum"><span>סה״כ זמן עבודה</span><span id="grand">00:00:00</span></div>
+  <datalist id="projects"></datalist>
+  <details class="manual">
+    <summary>➕ הוספת שעות ידנית</summary>
+    <input id="m-project" type="text" list="projects" placeholder="שם פרויקט" autocomplete="off">
+    <input id="m-sub" type="text" list="subs-manual" placeholder="תת-פרויקט (לא חובה)" autocomplete="off">
+    <datalist id="subs-manual"></datalist>
+    <div class="row">
+      <input id="m-hours" type="number" min="0" placeholder="שעות">
+      <input id="m-min" type="number" min="0" max="59" placeholder="דקות">
+    </div>
+    <input id="m-date" type="date">
+    <button id="m-add" class="primary">הוספת הזמן</button>
+    <div id="m-msg" class="msg"></div>
+  </details>
   <div id="running" class="empty" hidden></div>
   <ul id="totals"></ul>
   <div id="empty" class="empty">עדיין אין פרויקטים.</div>

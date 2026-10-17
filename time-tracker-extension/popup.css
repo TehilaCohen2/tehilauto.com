@@ -18,7 +18,7 @@ section#idle, section#active {
   background: var(--card); border-radius: 14px; padding: 14px;
   box-shadow: 0 4px 14px rgba(109, 40, 217, .10);
 }
-input[type=text] {
+input[type=text], input[type=number], input[type=date] {
   width: 100%; padding: 10px 12px; margin-bottom: 10px;
   border: 2px solid var(--line); border-radius: 10px; font-size: 14px; background: #fcfbff;
 }
@@ -32,6 +32,7 @@ button:hover { filter: brightness(1.07); }
 button.link { background: none; color: var(--brand); padding: 4px 0; font-size: 12px; font-weight: 600; box-shadow: none; }
 .label { color: var(--muted); font-size: 12px; }
 .current { font-weight: 800; font-size: 17px; margin-bottom: 2px; word-break: break-word; color: var(--brand); }
+.current-sub { color: var(--muted); font-weight: 600; margin-bottom: 2px; }
 .clock {
   font-size: 38px; font-weight: 800; text-align: center; margin: 10px 0 14px;
   font-variant-numeric: tabular-nums; direction: ltr;
@@ -60,3 +61,12 @@ footer { margin-top: 10px; display: flex; justify-content: space-between; }
 .credit a { color: var(--brand); text-decoration: none; font-weight: 700; }
 .credit a:hover { text-decoration: underline; }
 [hidden] { display: none !important; }
+li.sub { margin-right: 18px; padding: 7px 12px; border-right-width: 3px; background: #fcfbff; font-size: 13px; }
+li.muted { color: var(--muted); }
+li.muted .time { background: #f4f4f8; color: var(--muted); }
+details.manual { margin-top: 12px; background: var(--card); border-radius: 12px; padding: 10px 12px; box-shadow: 0 2px 8px rgba(109,40,217,.08); }
+details.manual summary { cursor: pointer; font-weight: 700; color: var(--brand); }
+details.manual[open] summary { margin-bottom: 10px; }
+.row { display: flex; gap: 8px; }
+.row input { flex: 1; min-width: 0; }
+.msg { font-size: 12px; color: var(--green); margin-top: 6px; min-height: 1em; }

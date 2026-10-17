@@ -12,15 +12,32 @@
   <section id="idle">
     <input id="project" type="text" list="projects" placeholder="שם הפרויקט" autocomplete="off">
     <datalist id="projects"></datalist>
+    <input id="sub" type="text" list="subs-start" placeholder="תת-פרויקט (לא חובה)" autocomplete="off">
+    <datalist id="subs-start"></datalist>
     <button id="start" class="primary">▶ הפעלת טיימר</button>
   </section>
 
   <section id="active" hidden>
     <div class="label">עובדת על:</div>
     <div id="current" class="current"></div>
+    <div id="current-sub" class="current-sub"></div>
     <div id="clock" class="clock">00:00:00</div>
     <button id="stop" class="danger">■ סיום טיימר</button>
   </section>
+
+  <details class="manual">
+    <summary>➕ הוספת שעות ידנית</summary>
+    <input id="m-project" type="text" list="projects" placeholder="שם פרויקט" autocomplete="off">
+    <input id="m-sub" type="text" list="subs-manual" placeholder="תת-פרויקט (לא חובה)" autocomplete="off">
+    <datalist id="subs-manual"></datalist>
+    <div class="row">
+      <input id="m-hours" type="number" min="0" placeholder="שעות">
+      <input id="m-min" type="number" min="0" max="59" placeholder="דקות">
+    </div>
+    <input id="m-date" type="date">
+    <button id="m-add" class="primary">הוספת הזמן</button>
+    <div id="m-msg" class="msg"></div>
+  </details>
 
   <h2>סיכום לפי פרויקט</h2>
   <ul id="totals"></ul>
