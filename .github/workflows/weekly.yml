@@ -5,6 +5,15 @@ on:
     # ימי ראשון 17:00 UTC (20:00 שעון ישראל בקיץ, 19:00 בחורף); GitHub עשוי לאחר את ההרצה
     - cron: "0 17 * * 0"
   workflow_dispatch:
+    inputs:
+      start_date:
+        description: "אופציונלי: תאריך התחלה YYYY-MM-DD (בלי תאריך: הדוח השבועי הרגיל)"
+        required: false
+        default: ""
+      end_date:
+        description: "אופציונלי: תאריך סיום YYYY-MM-DD (ריק = היום)"
+        required: false
+        default: ""
 
 permissions:
   contents: read
@@ -40,3 +49,5 @@ jobs:
           GMAIL_USER: ${{ secrets.GMAIL_USER }}
           GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
           MAIL_TO: ${{ secrets.MAIL_TO }}
+          START_DATE: ${{ inputs.start_date }}
+          END_DATE: ${{ inputs.end_date }}

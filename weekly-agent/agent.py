@@ -317,11 +317,15 @@ def video_section(cur, prev, errors):
     return table(["סרטון", "הפעלה בלחיצה", "הפעלה בריחוף", "25%", "50%", "75%", "100%"], rows) + note
 
 
-def build_email(start, end, data, prev, errors):
+def build_email(start, end, data, prev, errors, custom=False):
     have_prev = any(prev.get(s) for s in SOURCES)
     parts = []
-    parts.append(f"<h2 style='margin:0'>סיכום שבועי: {fmt_date(start)}–{fmt_date(end)}</h2>")
-    if not have_prev:
+    title = "סיכום מותאם" if custom else "סיכום שבועי"
+    parts.append(f"<h2 style='margin:0'>{title}: {fmt_date(start)}–{fmt_date(end)}</h2>")
+    if custom:
+        parts.append("<p style='background:#fff6d6;padding:6px 10px'>סיכום לטווח תאריכים מותאם, ללא השוואה "
+                     "לשבוע קודם. נתוני Search Console של 2–3 הימים האחרונים עדיין חלקיים.</p>")
+    elif not have_prev:
         parts.append("<p style='background:#fff6d6;padding:6px 10px'>אין עדיין נתוני השוואה "
                      "לשבוע קודם, ולכן לא מוצגים אחוזי שינוי.</p>")
 
@@ -443,14 +447,43 @@ def send_mail(subject, html_body):
         s.send_message(msg)
 
 
+def parse_range():
+    """טווח מותאם מהרצה ידנית (START_DATE/END_DATE). מחזיר None אם לא הוזן."""
+    raw_s = os.environ.get("START_DATE", "").strip()
+    raw_e = os.environ.get("END_DATE", "").strip()
+    if not raw_s and not raw_e:
+        return None
+    if not raw_s:
+        raise ValueError("חסר תאריך התחלה")
+    today = dt.date.today()
+    try:
+        start = dt.date.fromisoformat(raw_s)
+        end = dt.date.fromisoformat(raw_e) if raw_e else today
+    except ValueError:
+        raise ValueError("פורמט תאריך לא תקין, נדרש YYYY-MM-DD")
+    end = min(end, today)
+    if start > end:
+        raise ValueError("תאריך ההתחלה מאוחר מתאריך הסיום")
+    return start, end
+
+
 def main():
     missing = [k for k in REQUIRED_ENV if not os.environ.get(k)]
     if missing:
         print("חסרים משתני סביבה (Secrets): " + ", ".join(missing))
         return 1
 
-    end = dt.date.today() - dt.timedelta(days=LAG_DAYS)
-    start = end - dt.timedelta(days=WINDOW_DAYS - 1)
+    try:
+        custom_range = parse_range()
+    except ValueError as exc:
+        print(str(exc))
+        return 1
+    custom = custom_range is not None
+    if custom:
+        start, end = custom_range
+    else:
+        end = dt.date.today() - dt.timedelta(days=LAG_DAYS)
+        start = end - dt.timedelta(days=WINDOW_DAYS - 1)
     prev_start = start - dt.timedelta(days=WINDOW_DAYS)
 
     fetchers = {
@@ -471,20 +504,23 @@ def main():
         except SourceError as exc:
             errors[name] = str(exc)
             print(f"{name}: נכשל ({exc})")
+        if custom:
+            continue
         try:
             prev[name] = sb_get(prev_start, name)
         except SourceError as exc:
             prev[name] = None
             errors["supabase"] = str(exc)
 
-    for name, payload in data.items():
+    for name, payload in ({} if custom else data).items():
         try:
             sb_save(start, end, name, payload)
         except SourceError as exc:
             errors["supabase"] = str(exc)
 
-    subject = f"סיכום שבועי tehilauto.com: {fmt_date(start)}–{fmt_date(end)}"
-    send_mail(subject, build_email(start, end, data, prev, errors))
+    label = "סיכום מותאם" if custom else "סיכום שבועי"
+    subject = f"{label} tehilauto.com: {fmt_date(start)}–{fmt_date(end)}"
+    send_mail(subject, build_email(start, end, data, prev, errors, custom))
     print("המייל נשלח.")
     return 0
 
